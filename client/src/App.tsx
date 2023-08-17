@@ -1,5 +1,5 @@
 import React from 'react'
-import '@fontsource/roboto/300.css'
+import BasicButtons from './components/Button'
 import logo from './logo.svg'
 import './App.css'
 
@@ -19,6 +19,7 @@ function App() {
         >
           Learn React
         </a>
+        {BasicButtons()}
       </header>
     </div>
   )
