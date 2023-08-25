@@ -1,27 +1,39 @@
-import React from 'react'
-import BasicButtons from './components/Button'
-import logo from './logo.svg'
+import React, { useState } from 'react'
+import { ButtonByMui } from './components/buttons/Button'
+import { InputByMui } from './components/inputs/Input'
+import { handleInputChange } from './utils/handlers/InputChangeHandler'
 import './App.css'
 
 function App() {
+  const [fields, setFields] = useState<{ [key: string]: string }>({
+    userId: '',
+    password: '',
+  })
+
+  const onLogin = () => {
+    console.log(fields)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        {BasicButtons()}
-      </header>
-    </div>
+    <>
+      <InputByMui
+        value={fields.userId}
+        type="text"
+        label="아이디"
+        onChange={(e) => handleInputChange(e, 'userId', fields, setFields)}
+      />
+      <InputByMui
+        value={fields.password}
+        type="password"
+        label="비밀번호"
+        onChange={(e) => handleInputChange(e, 'password', fields, setFields)}
+      />
+      <ButtonByMui
+        color="primary"
+        variant="outlined"
+        label="로그인"
+        onClick={onLogin}
+      />
+    </>
   )
 }
 
