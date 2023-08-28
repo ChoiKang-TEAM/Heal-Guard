@@ -1,11 +1,11 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react'
 
 export const handleInputChange = (
-  e: ChangeEvent<HTMLInputElement>,
+  event: ChangeEvent<HTMLInputElement>,
   fieldName: string,
   fields: { [key: string]: string },
   setFields: Dispatch<SetStateAction<{ [key: string]: string }>>
 ) => {
-  const { value } = e.target
+  const { value } = event.target
   setFields((prevFields) => ({ ...prevFields, [fieldName]: value }))
 }

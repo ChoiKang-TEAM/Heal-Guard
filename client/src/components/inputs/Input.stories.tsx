@@ -4,7 +4,7 @@ import { InputByMui } from './Input'
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta = {
-  title: 'Example/Button',
+  title: 'Example/Input',
   component: InputByMui,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout
@@ -24,5 +24,12 @@ export const InputByText: Story = {
   args: {
     type: 'text',
     label: 'InputByText',
+  },
+}
+
+export const InputByPassword: Story = {
+  args: {
+    type: 'password',
+    label: 'InputByPassword',
   },
 }

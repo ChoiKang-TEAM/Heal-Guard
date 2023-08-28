@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import MuiButton from '@mui/material/Button'
 
 interface ButtonProps {
@@ -43,12 +43,7 @@ export const Button = ({
 
 export const ButtonByMui = ({ disabled = false, ...props }: ButtonMuiProps) => {
   return (
-    <MuiButton
-      variant={props.variant}
-      color={props.color}
-      disabled={disabled}
-      onClick={props.onClick}
-    >
+    <MuiButton disabled={disabled} {...props}>
       {props.label}
     </MuiButton>
   )

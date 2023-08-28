@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
@@ -27,30 +27,37 @@ export const InputByMui = ({
   ) => {
     event.preventDefault()
   }
+
+  const renderPasswordToggle = (): JSX.Element | null => {
+    if (type !== 'password') {
+      return null
+    }
+
+    return (
+      <InputAdornment position="end">
+        <IconButton
+          aria-label="toggle password visibility"
+          onClick={handleClickShowPassword}
+          onMouseDown={handleMouseDownPassword}
+          edge="end"
+        >
+          {showPassword ? <VisibilityOff /> : <Visibility />}
+        </IconButton>
+      </InputAdornment>
+    )
+  }
+
   return (
     <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
       <InputLabel htmlFor={`outlined-adornment-${label}`}>{label}</InputLabel>
       <OutlinedInput
         id={`outlined-adornment-${label}`}
-        type={type}
+        type={
+          type === 'password' ? (showPassword ? 'text' : 'password') : 'text'
+        }
         value={value}
         onChange={onChange}
-        endAdornment={
-          type === 'password' ? (
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-                edge="end"
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          ) : (
-            <></>
-          )
-        }
+        endAdornment={renderPasswordToggle()}
         label={label}
       />
     </FormControl>
