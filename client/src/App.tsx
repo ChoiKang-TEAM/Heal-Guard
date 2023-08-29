@@ -1,12 +1,12 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
-import { Login } from 'pages/sign-up/Login'
+import { BrowserRouter } from 'react-router-dom'
+import RouterConfig from 'routes'
 
 function App() {
   return (
-    <>
-      <Route path="/login" Component={Login} />
-    </>
+    <BrowserRouter>
+      <RouterConfig />
+    </BrowserRouter>
   )
 }
 
