@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { ButtonByMui } from 'components/buttons/Button'
 import { InputByMui } from 'components/inputs/Input'
-import { handleInputChange } from 'utils/handlers/InputChangeHandler'
+import { handleChange } from 'utils/handlers/DataChangeHandler'
 import { getUser } from 'apis/get-user'
 
 const Home = () => {
@@ -24,13 +24,13 @@ const Home = () => {
         value={fields.userId}
         type="text"
         label="아이디"
-        onChange={(e) => handleInputChange(e, 'userId', fields, setFields)}
+        onChange={(e) => handleChange(e, 'userId', fields, setFields)}
       />
       <InputByMui
         value={fields.password}
         type="password"
         label="비밀번호"
-        onChange={(e) => handleInputChange(e, 'password', fields, setFields)}
+        onChange={(e) => handleChange(e, 'password', fields, setFields)}
       />
       <ButtonByMui
         color="primary"
