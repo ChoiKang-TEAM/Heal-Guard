@@ -1,6 +1,6 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react'
 
-export const handleInputChange = (
+export const handleChange = (
   event: ChangeEvent<HTMLInputElement>,
   fieldName: string,
   fields: { [key: string]: string },
