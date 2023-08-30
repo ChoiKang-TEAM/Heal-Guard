@@ -1,5 +1,4 @@
 import React from 'react'
-import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import InputAdornment from '@mui/material/InputAdornment'
@@ -48,7 +47,7 @@ export const InputByMui = ({
   }
 
   return (
-    <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+    <>
       <InputLabel htmlFor={`outlined-adornment-${label}`}>{label}</InputLabel>
       <OutlinedInput
         id={`outlined-adornment-${label}`}
@@ -60,6 +59,6 @@ export const InputByMui = ({
         endAdornment={renderPasswordToggle()}
         label={label}
       />
-    </FormControl>
+    </>
   )
 }
