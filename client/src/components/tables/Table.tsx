@@ -17,6 +17,10 @@ function createData(
   return { name, calories, fat, carbs, protein }
 }
 
+interface TableDataProps {
+  headerRow: string[]
+}
+
 const rows = [
   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
   createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
@@ -25,17 +29,15 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ]
 
-export default function DenseTable() {
+export const DenseTable = ({ headerRow }: TableDataProps) => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            {headerRow.map((header, idx) => (
+              <TableCell key={idx}>{header}</TableCell>
+            ))}
           </TableRow>
         </TableHead>
         <TableBody>
