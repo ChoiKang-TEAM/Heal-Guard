@@ -15,7 +15,7 @@ export const RadioButtonsGroup = <T extends string | number>(
 ) => {
   return (
     <FormControl>
-      <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
+      <FormLabel id="demo-radio-buttons-group-label">버루막</FormLabel>
       <RadioGroup
         aria-labelledby="demo-radio-buttons-group-label"
         defaultValue="female"
