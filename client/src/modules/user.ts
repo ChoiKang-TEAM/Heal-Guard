@@ -1,3 +1,4 @@
+import { getUser } from 'apis/get-user'
 import { User } from 'common/interfaces/users/User'
 
 const SET_USER = 'user/SET_USER'
@@ -21,9 +22,13 @@ const initialState: User = {
   userId: '',
 }
 
-const userReducer = (state = initialState, action: UserActionTypes): User => {
+const userReducer = async (
+  state = initialState,
+  action: UserActionTypes
+): Promise<User> => {
   switch (action.type) {
     case SET_USER:
+      await getUser(state)
       return {
         ...state,
         ...action.payload,
