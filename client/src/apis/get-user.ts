@@ -15,13 +15,12 @@ const verifyUser = (confirmCheckUser: User): boolean => {
   else return false
 }
 
-export const getUser = (ctx: User) => {
+export const getUser = async (ctx: User) => {
   console.log(ctx)
   try {
     if (verifyUser(ctx)) {
-      console.log('test1')
-      localStorage.setItem('token', '1234')
-    } else return
+      return 'token'
+    } else throw new Error('INVALID USER')
   } catch (e) {
     console.error(e)
   }
