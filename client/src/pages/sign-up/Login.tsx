@@ -4,24 +4,25 @@ import { InputByMui } from 'components/inputs/Input'
 import { RadioByMui } from 'components/radios/Radio'
 import { handleChange } from 'utils/handlers/dataChangeHandler'
 import { RadioButtonsGroup } from 'components/radios/RadioGroup'
-import { getUser } from 'apis/get-user'
+import { User, getUser } from 'apis/get-user'
 import { Form } from 'components/forms/Form'
 import { FormControl } from '@mui/material'
 import { ClockCard } from 'components/clocks/Clock'
 
 const Login = () => {
-  const [fields, setFields] = useState<{ [key: string]: string }>({
+  const [fields, setFields] = useState<User>({
     userId: '',
     password: '',
     gender: 'a',
+    BUDI: '',
   })
 
+  const handleValueChange = (selectedValue: string | number) => {
+    setFields((prevFields: User) => ({ ...prevFields, BUDI: selectedValue }))
+  }
+
   const onLogin = () => {
-    const dto = {
-      userId: fields.userId,
-      password: fields.password,
-    }
-    console.log(fields)
+    const dto: User = { ...fields }
     getUser(dto)
   }
   return (
@@ -67,7 +68,12 @@ const Login = () => {
           onChange={(e) => handleChange(e, 'gender', fields, setFields)}
         />
       </FormControl>
-      <RadioButtonsGroup label="buddy" value={['buddy', 'lucy', 'maxi']} />
+      <RadioButtonsGroup
+        label="BUDI"
+        defaultValue="buddy"
+        value={['buddy', 'lucy', 'maxi']}
+        onValueChange={handleValueChange}
+      />
     </Form>
   )
 }
