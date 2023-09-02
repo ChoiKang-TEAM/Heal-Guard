@@ -1,9 +1,4 @@
-export interface User {
-  userId: string
-  password: string
-  gender?: string
-  BUDI?: string | number
-}
+import { User } from 'common/interfaces/users/User'
 
 const basicUser: User = {
   userId: 'test',

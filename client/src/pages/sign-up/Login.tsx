@@ -4,10 +4,11 @@ import { InputByMui } from 'components/inputs/Input'
 import { RadioByMui } from 'components/radios/Radio'
 import { handleChange } from 'utils/handlers/dataChangeHandler'
 import { RadioButtonsGroup } from 'components/radios/RadioGroup'
-import { User, getUser } from 'apis/get-user'
+import { getUser } from 'apis/get-user'
 import { Form } from 'components/forms/Form'
 import { FormControl } from '@mui/material'
 import { ClockCard } from 'components/clocks/Clock'
+import { User } from 'common/interfaces/users/User'
 
 const Login = () => {
   const [fields, setFields] = useState<User>({
