@@ -10,6 +10,13 @@ export const loginUser = createAsyncThunk(
   }
 )
 
+const initialState: User = {
+  userId: '',
+  BUDI: '',
+  gender: '',
+  password: '',
+}
+
 const decode = (token: string): User => {
   token
   return {
@@ -20,7 +27,7 @@ const decode = (token: string): User => {
 
 const userSlice = createSlice({
   name: 'user',
-  initialState: { user: null, status: 'idle', error: null },
+  initialState: { user: initialState, status: 'idle', error: null },
   reducers: {},
   extraReducers: (builder) => {
     builder
