@@ -10,6 +10,14 @@ export const loginUser = createAsyncThunk(
   }
 )
 
+const decode = (token: string): User => {
+  token
+  return {
+    userId: 'as',
+    password: 'as',
+  }
+}
+
 const userSlice = createSlice({
   name: 'user',
   initialState: { user: null, status: 'idle', error: null },
@@ -20,8 +28,9 @@ const userSlice = createSlice({
         state.status = 'loading'
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.status = 'succe'
-        state.user = action.payload
+        state.status = 'complete'
+
+        state.user = decode(action.payload || '')
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed'
