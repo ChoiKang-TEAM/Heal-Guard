@@ -1,5 +1,5 @@
 import { getUser } from 'apis/get-user'
-import { User } from 'common/interfaces/users/User'
+import { User } from 'common/interfaces/users/user'
 
 const SET_USER = 'user/SET_USER'
 const LOGOUT = 'user/LOGOUT'
