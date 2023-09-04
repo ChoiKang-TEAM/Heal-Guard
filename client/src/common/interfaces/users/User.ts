@@ -4,4 +4,5 @@ export interface User {
   password?: string
   gender?: string
   BUDI?: string | number
+  status?: string
 }
