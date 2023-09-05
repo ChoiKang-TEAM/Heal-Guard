@@ -18,6 +18,8 @@ const Login = () => {
     BUDI: '',
   })
 
+  console.log(fields)
+
   const handleValueChange = (selectedValue: string | number) => {
     setFields((prevFields: User) => ({ ...prevFields, BUDI: selectedValue }))
   }
