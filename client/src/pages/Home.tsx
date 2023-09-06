@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { ButtonByMui } from 'components/buttons/Button'
 import { InputByMui } from 'components/inputs/Input'
 import { handleChange } from 'utils/handlers/dataChangeHandler'
-import { getUser } from 'apis/get-user'
+import { getUser } from 'apis/getUser'
 
 const Home = () => {
   const [fields, setFields] = useState<{ [key: string]: string }>({

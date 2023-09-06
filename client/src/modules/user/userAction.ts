@@ -1,4 +1,4 @@
-import { getUser } from 'apis/get-user'
+import { getUser } from 'apis/getUser'
 import { User } from 'common/interfaces/users/user'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
