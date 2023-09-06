@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-export const signUpUserApi = () => {
+export const signUpUserApi = (params) => {
   try {
-    const response = axios.get('api/sign-up')
+    const response = axios.post('api/sign-up')
     return response
   } catch (e) {
     console.error(e)
