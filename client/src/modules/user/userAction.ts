@@ -1,5 +1,5 @@
 import { getUser } from 'apis/getUser'
-import { User } from 'common/interfaces/users/user'
+import { User } from 'types/interface/user'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
 export const loginUser = createAsyncThunk(
