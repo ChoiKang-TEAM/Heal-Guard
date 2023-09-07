@@ -1,4 +1,4 @@
-import { User } from 'common/interfaces/users/user'
+import { User } from 'types/interface/user'
 import { ButtonByMui } from 'components/buttons/Button'
 import React from 'react'
 import { loginUser } from 'modules/user/userAction'

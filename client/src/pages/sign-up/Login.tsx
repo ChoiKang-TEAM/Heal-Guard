@@ -8,7 +8,7 @@ import { getUser } from 'apis/getUser'
 import { Form } from 'components/forms/Form'
 import { FormControl } from '@mui/material'
 import { ClockCard } from 'components/clocks/Clock'
-import { User } from 'common/interfaces/users/user'
+import { User } from 'types/interface/user'
 
 const Login = () => {
   const [fields, setFields] = useState<User>({
