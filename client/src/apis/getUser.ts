@@ -1,4 +1,4 @@
-import { User } from 'common/interfaces/users/user'
+import { User } from 'types/interface/user'
 
 const basicUser: User = {
   userId: 'test',
@@ -15,7 +15,7 @@ const verifyUser = (confirmCheckUser: User): boolean => {
   else return false
 }
 
-export const getUser = async (ctx: User) => {
+const getUser = async (ctx: User) => {
   console.log(ctx)
   try {
     if (verifyUser(ctx)) {
@@ -25,3 +25,20 @@ export const getUser = async (ctx: User) => {
     console.error(e)
   }
 }
+
+const isUsedUserId = async (userId: string): Promise<boolean> => {
+  try {
+    const response: boolean = !!userId
+    return response
+  } catch (e) {
+    console.error(e)
+    return false
+  }
+}
+
+const getUerApi = {
+  getUser,
+  isUsedUserId,
+}
+
+export default getUerApi
