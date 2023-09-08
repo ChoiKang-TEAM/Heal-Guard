@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import { AppBar, Toolbar, Typography, Box, Tabs, Tab } from '@mui/material'
 
 const Header = () => {
   const [tabValue, setTabValue] = useState(0)
 
-  const handleTabChange = (event: any, newValue: number) => {
-    setTabValue(newValue)
+  const handleTabChange = (event: ChangeEvent<HTMLInputElement>) => {
+    console.log(event)
+    setTabValue(Number(event.target.value))
   }
 
   return (
