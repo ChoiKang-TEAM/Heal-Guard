@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import Login from 'pages/sign-up/Login'
 import Home from 'pages/Home'
 import SignUp from 'pages/sign-up/SignUp'
-import PrivateRoutes from 'components/wrappers/PrivateRoute'
+import PrivateRoutes from 'routes/PrivateRoute'
 
 const RouterConfig = () => {
   return (
