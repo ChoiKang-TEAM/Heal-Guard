@@ -1,5 +1,8 @@
 import axios from 'axios'
-import { AuthUserVerifyCodeByEmailInput } from 'types/interface/sign-up/signUpInterface'
+import {
+  AuthUserVerifyCodeByEmailInput,
+  SignUpUserInput,
+} from 'types/interface/sign-up/signUpInterface'
 
 const getAuthVerifyCodeByEmail = async (
   params: AuthUserVerifyCodeByEmailInput
@@ -8,8 +11,9 @@ const getAuthVerifyCodeByEmail = async (
   return response
 }
 
-const signUpUser = (params) => {
+const signUpUser = (params: SignUpUserInput) => {
   try {
+    console.log(params)
     const response = axios.post('api/sign-up')
     return response
   } catch (e) {
@@ -23,5 +27,6 @@ const signUpUserApi = {
 }
 export default signUpUserApi
 function isUsedUserId(userId: string) {
+  console.log(userId)
   throw new Error('Function not implemented.')
 }

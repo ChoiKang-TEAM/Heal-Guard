@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import { ButtonByMui } from 'components/buttons/Button'
-import { InputByMui } from 'components/inputs/Input'
-import { RadioByMui } from 'components/radios/Radio'
+import { ButtonByMui } from 'components/atoms/buttons/Button'
+import { InputByMui } from 'components/atoms/inputs/Input'
+import { RadioByMui } from 'components/atoms/radios/Radio'
 import { handleChange } from 'utils/handlers/dataChangeHandler'
-import { RadioButtonsGroup } from 'components/radios/RadioGroup'
-import { getUser } from 'apis/getUser'
-import { Form } from 'components/forms/Form'
+import { RadioButtonsGroup } from 'components/atoms/radios/RadioGroup'
+
+import { Form } from 'components/molecules/forms/Form'
 import { FormControl } from '@mui/material'
-import { ClockCard } from 'components/clocks/Clock'
+import { ClockCard } from 'components/molecules/clocks/Clock'
 import { User } from 'types/interface/user'
 
 const Login = () => {
@@ -26,7 +26,7 @@ const Login = () => {
 
   const onLogin = () => {
     const dto: User = { ...fields }
-    getUser(dto)
+    console.log(dto)
   }
   return (
     <Form>

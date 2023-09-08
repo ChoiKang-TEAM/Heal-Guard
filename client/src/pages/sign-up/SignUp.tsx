@@ -1,5 +1,5 @@
 import { User } from 'types/interface/user'
-import { ButtonByMui } from 'components/buttons/Button'
+import { ButtonByMui } from 'components/atoms/buttons/Button'
 import React from 'react'
 import { loginUser } from 'modules/user/userAction'
 import { useAppDispatch, useAppSelector } from 'store'

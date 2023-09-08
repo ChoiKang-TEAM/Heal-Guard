@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { ButtonByMui } from 'components/buttons/Button'
-import { InputByMui } from 'components/inputs/Input'
+import { ButtonByMui } from 'components/atoms/buttons/Button'
+import { InputByMui } from 'components/atoms/inputs/Input'
 import { handleChange } from 'utils/handlers/dataChangeHandler'
-import { getUser } from 'apis/getUser'
 
 const Home = () => {
   const [fields, setFields] = useState<{ [key: string]: string }>({
@@ -11,12 +10,7 @@ const Home = () => {
   })
 
   const onLogin = () => {
-    const dto = {
-      userId: fields.userId,
-      password: fields.password,
-    }
     console.log(fields)
-    getUser(dto)
   }
   return (
     <>
