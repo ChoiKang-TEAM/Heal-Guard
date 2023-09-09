@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ButtonByMui } from 'components/atoms/buttons/Button'
+// import { ButtonByMui } from 'components/atoms/buttons/Button'
 // import { InputByMui } from 'components/atoms/inputs/Input'
 import { RadioByMui } from 'components/atoms/radios/Radio'
 import { handleChange } from 'utils/handlers/dataChangeHandler'
@@ -8,22 +8,24 @@ import { RadioButtonsGroup } from 'components/atoms/radios/RadioGroup'
 import { FormControl } from '@mui/material'
 import { ClockCard } from 'components/molecules/clocks/Clock'
 import { User } from 'types/interface/user'
-import { useForm } from 'react-hook-form'
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 //import { EMAIL_REGEX } from 'common/constants/regexs'
 
 const Login = () => {
   const [fields, setFields] = useState<User>({
-    userId: undefined,
-    password: undefined,
+    userId: '',
+    password: '',
   })
 
   const schema = yup.object().shape({
-    userId: yup.string().required('아이디를 입력해주세요.'),
+    userId: yup.string().email().required('아이디를 입력해주세요.'),
 
     password: yup.string().required('비밀번호를 입력해주세요.'),
   })
+
+  type FormData = yup.InferType<typeof schema>
 
   // const handleCustomChange = (
   //   e: React.ChangeEvent<HTMLInputElement>,
@@ -40,7 +42,7 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<{ userId: string; password: string }>({
+  } = useForm<FormData>({
     resolver: yupResolver(schema),
   })
 
@@ -48,28 +50,22 @@ const Login = () => {
     setFields((prevFields: User) => ({ ...prevFields, BUDI: selectedValue }))
   }
 
-  const onLogin = () => {
-    const dto: User = { ...fields }
-    console.log(dto)
-    console.log(errors)
+  const onLogin: SubmitHandler<FieldValues> = ({ userId, password }) => {
+    console.log(userId, password)
+    console.log(1)
   }
   return (
     <form onSubmit={handleSubmit(onLogin)}>
       <ClockCard />
 
       <input type="text" {...register('userId')} />
-      <p>{errors.userId?.message}</p>
+      <p style={{ color: 'red' }}>{errors.userId?.message}</p>
 
       <input type="password" {...register('password')} />
-      <p>{errors.password?.message}</p>
+      <p style={{ color: 'red' }}>{errors.password?.message}</p>
 
       <FormControl>
-        <ButtonByMui
-          color="primary"
-          variant="outlined"
-          label="로그인"
-          onClick={onLogin}
-        />
+        <button type="submit" onClick={onLogin} />
       </FormControl>
       <FormControl>
         <RadioByMui
