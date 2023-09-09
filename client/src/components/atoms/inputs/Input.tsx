@@ -13,52 +13,54 @@ interface InputByMuiProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export const InputByMui = ({
-  label,
-  type,
-  value,
-  onChange,
-}: InputByMuiProps) => {
-  const [showPassword, setShowPassword] = React.useState(false)
-  const handleClickShowPassword = () => setShowPassword((show) => !show)
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault()
-  }
+const InputByMui = React.forwardRef<HTMLInputElement, InputByMuiProps>(
+  ({ label, type, value, onChange }, ref) => {
+    const [showPassword, setShowPassword] = React.useState(false)
+    const handleClickShowPassword = () => setShowPassword((show) => !show)
+    const handleMouseDownPassword = (
+      event: React.MouseEvent<HTMLButtonElement>
+    ) => {
+      event.preventDefault()
+    }
 
-  const renderPasswordToggle = (): JSX.Element | null => {
-    if (type !== 'password') {
-      return null
+    const renderPasswordToggle = (): JSX.Element | null => {
+      if (type !== 'password') {
+        return null
+      }
+
+      return (
+        <InputAdornment position="end">
+          <IconButton
+            aria-label="toggle password visibility"
+            onClick={handleClickShowPassword}
+            onMouseDown={handleMouseDownPassword}
+            edge="end"
+          >
+            {showPassword ? <VisibilityOff /> : <Visibility />}
+          </IconButton>
+        </InputAdornment>
+      )
     }
 
     return (
-      <InputAdornment position="end">
-        <IconButton
-          aria-label="toggle password visibility"
-          onClick={handleClickShowPassword}
-          onMouseDown={handleMouseDownPassword}
-          edge="end"
-        >
-          {showPassword ? <VisibilityOff /> : <Visibility />}
-        </IconButton>
-      </InputAdornment>
+      <>
+        <InputLabel htmlFor={`outlined-adornment-${label}`}>{label}</InputLabel>
+        <OutlinedInput
+          ref={ref}
+          id={`outlined-adornment-${label}`}
+          type={
+            type === 'password' ? (showPassword ? 'text' : 'password') : 'text'
+          }
+          value={value}
+          onChange={onChange}
+          endAdornment={renderPasswordToggle()}
+          label={label}
+        />
+      </>
     )
   }
+)
 
-  return (
-    <>
-      <InputLabel htmlFor={`outlined-adornment-${label}`}>{label}</InputLabel>
-      <OutlinedInput
-        id={`outlined-adornment-${label}`}
-        type={
-          type === 'password' ? (showPassword ? 'text' : 'password') : 'text'
-        }
-        value={value}
-        onChange={onChange}
-        endAdornment={renderPasswordToggle()}
-        label={label}
-      />
-    </>
-  )
-}
+InputByMui.displayName = 'InputByMui'
+
+export { InputByMui }
