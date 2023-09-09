@@ -50,15 +50,18 @@ const Login = () => {
     setFields((prevFields: User) => ({ ...prevFields, BUDI: selectedValue }))
   }
 
-  const onLogin: SubmitHandler<FieldValues> = ({ userId, password }) => {
-    console.log(userId, password)
-    console.log(1)
+  const onLogin: SubmitHandler<FieldValues> = () => {
+    console.log(fields)
   }
   return (
     <form onSubmit={handleSubmit(onLogin)}>
       <ClockCard />
 
-      <input type="text" {...register('userId')} />
+      <input
+        type="text"
+        {...register('userId')}
+        onChange={(e) => handleChange(e, 'userId', fields, setFields)}
+      />
       <p style={{ color: 'red' }}>{errors.userId?.message}</p>
 
       <input type="password" {...register('password')} />
