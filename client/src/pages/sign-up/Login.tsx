@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { ButtonByMui } from 'components/atoms/buttons/Button'
+import { InputByMui } from 'components/atoms/inputs/Input'
 //import { EMAIL_REGEX } from 'common/constants/regexs'
 
 const Login = () => {
@@ -53,6 +54,7 @@ const Login = () => {
 
   const onLogin = () => {
     console.log(fields)
+    console.log(errors)
   }
   return (
     <form onSubmit={handleSubmit(onLogin)}>
@@ -65,7 +67,12 @@ const Login = () => {
       />
       <p style={{ color: 'red' }}>{errors.userId?.message}</p>
 
-      <input type="password" {...register('password')} />
+      <InputByMui
+        label="비밀번호"
+        type="password"
+        {...register('password')}
+        onChange={(e) => handleChange(e, 'password', fields, setFields)}
+      />
       <p style={{ color: 'red' }}>{errors.password?.message}</p>
 
       <FormControl>
