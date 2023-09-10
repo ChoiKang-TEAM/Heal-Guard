@@ -14,6 +14,7 @@ interface ButtonMuiProps {
   variant?: 'text' | 'contained' | 'outlined'
   disabled?: boolean
   label: string
+  type?: 'button' | 'submit' | 'reset'
   onClick?: () => void
 }
 
@@ -43,7 +44,7 @@ export const Button = ({
 
 export const ButtonByMui = ({ disabled = false, ...props }: ButtonMuiProps) => {
   return (
-    <MuiButton disabled={disabled} {...props}>
+    <MuiButton disabled={disabled} type={props.type} {...props}>
       {props.label}
     </MuiButton>
   )

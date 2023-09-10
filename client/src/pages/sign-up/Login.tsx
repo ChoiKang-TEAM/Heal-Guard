@@ -8,9 +8,10 @@ import { RadioButtonsGroup } from 'components/atoms/radios/RadioGroup'
 import { FormControl } from '@mui/material'
 import { ClockCard } from 'components/molecules/clocks/Clock'
 import { User } from 'types/interface/user'
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import { ButtonByMui } from 'components/atoms/buttons/Button'
 //import { EMAIL_REGEX } from 'common/constants/regexs'
 
 const Login = () => {
@@ -50,7 +51,7 @@ const Login = () => {
     setFields((prevFields: User) => ({ ...prevFields, BUDI: selectedValue }))
   }
 
-  const onLogin: SubmitHandler<FieldValues> = () => {
+  const onLogin = () => {
     console.log(fields)
   }
   return (
@@ -68,7 +69,7 @@ const Login = () => {
       <p style={{ color: 'red' }}>{errors.password?.message}</p>
 
       <FormControl>
-        <button type="submit" onClick={onLogin} />
+        <ButtonByMui label="아이디" type={'submit'} onClick={onLogin} />
       </FormControl>
       <FormControl>
         <RadioByMui
