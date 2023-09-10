@@ -5,10 +5,10 @@ import { RadioByMui } from 'components/atoms/radios/Radio'
 import { handleChange } from 'utils/handlers/dataChangeHandler'
 import { RadioButtonsGroup } from 'components/atoms/radios/RadioGroup'
 // import { Form } from 'components/molecules/forms/Form'
-import { FormControl } from '@mui/material'
+import { FormControl, Input } from '@mui/material'
 import { ClockCard } from 'components/molecules/clocks/Clock'
 import { User } from 'types/interface/user'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { ButtonByMui } from 'components/atoms/buttons/Button'
@@ -41,11 +41,13 @@ const Login = () => {
   // }
 
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
+    mode: 'onChange',
   })
 
   const handleValueChange = (selectedValue: string | number) => {
@@ -59,7 +61,20 @@ const Login = () => {
   return (
     <form onSubmit={handleSubmit(onLogin)}>
       <ClockCard />
-
+      <Controller
+        name="userId"
+        control={control}
+        defaultValue=""
+        render={({ field }) => {
+          console.log(field)
+          return (
+            <>
+              <Input {...field} placeholder="아이디" />
+              {errors.userId && <span>{errors.userId.message}</span>}
+            </>
+          )
+        }}
+      />
       <input
         type="text"
         {...register('userId')}
