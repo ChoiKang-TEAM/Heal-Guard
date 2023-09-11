@@ -1,5 +1,6 @@
 import { User } from 'src/types/interface/user'
 
+const usedEmail: string[] = ['motojate@naver.com', 'maxi@soulware.kr']
 const basicUser: User = {
   userId: 'test',
   password: 'qwer1234!!',
@@ -28,11 +29,10 @@ const getUser = async (ctx: User) => {
 
 const isUsedUserId = async (userId: string): Promise<boolean> => {
   try {
-    const response: boolean = !!userId
-    return response
+    return usedEmail.includes(userId)
   } catch (e) {
     console.error(e)
-    return false
+    throw new Error('IS_NOT_VALIDATION')
   }
 }
 
