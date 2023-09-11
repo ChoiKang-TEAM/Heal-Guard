@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { ButtonByMui } from 'components/atoms/buttons/Button'
-import { InputByMui } from 'components/atoms/inputs/Input'
-import { handleChange } from 'utils/handlers/dataChangeHandler'
-import Header from 'components/molecules/headers/Header'
+import { ButtonByMui } from 'src/components/atoms/buttons/Button'
+import { InputByMui } from 'src/components/atoms/inputs/Input'
+import { handleChange } from 'src/utils/handlers/dataChangeHandler'
+import Header from 'src/components/molecules/headers/Header'
 
 const Home = () => {
   const [fields, setFields] = useState<{ [key: string]: string }>({

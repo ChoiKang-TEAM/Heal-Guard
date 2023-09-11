@@ -2,7 +2,7 @@ import axios from 'axios'
 import {
   AuthUserVerifyCodeByEmailInput,
   SignUpUserInput,
-} from 'types/interface/sign-up/signUpInterface'
+} from 'src/types/interface/sign-up/signUpInterface'
 
 const getAuthVerifyCodeByEmail = async (
   params: AuthUserVerifyCodeByEmailInput

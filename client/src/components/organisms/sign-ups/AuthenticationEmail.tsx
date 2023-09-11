@@ -5,17 +5,17 @@ import { RadioByMui } from 'src/components/atoms/radios/Radio'
 import { handleChange } from 'src/utils/handlers/dataChangeHandler'
 import { RadioButtonsGroup } from 'src/components/atoms/radios/RadioGroup'
 // import { Form } from 'components/molecules/forms/Form'
-import { FormControl, Input, OutlinedInput } from '@mui/material'
-import { ClockCard } from 'src/components/molecules/clocks/Clock'
+import { FormControl, Input, TextField } from '@mui/material'
 import { User } from 'src/types/interface/user'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { ButtonByMui } from 'src/components/atoms/buttons/Button'
+import FormLayout from 'src/components/organisms/layouts/FormLayout'
 // import { InputByMui } from 'components/atoms/inputs/Input'
 //import { EMAIL_REGEX } from 'common/constants/regexs'
 
-const Login = () => {
+const AuthenticationEmail = () => {
   const [fields, setFields] = useState<User>({
     userId: '',
     password: '',
@@ -59,63 +59,64 @@ const Login = () => {
     console.log(errors)
   }
   return (
-    <form onSubmit={handleSubmit(onLogin)}>
-      <ClockCard />
-      <Controller
-        name="userId"
-        control={control}
-        defaultValue=""
-        render={({ field }) => {
-          console.log(field)
-          return (
-            <>
-              <Input {...field} placeholder="아이디" />
-              {errors.userId && <span>{errors.userId.message}</span>}
-            </>
-          )
-        }}
-      />
-      <input
-        type="text"
-        {...register('userId')}
-        onChange={(e) => handleChange(e, 'userId', fields, setFields)}
-      />
-      <p style={{ color: 'red' }}>{errors.userId?.message}</p>
-
-      <OutlinedInput
-        type="password"
-        {...register('password')}
-        label="오토컴플리트"
-      />
-      <p style={{ color: 'red' }}>{errors.password?.message}</p>
-
-      <FormControl>
-        <ButtonByMui label="아이디" type={'submit'} onClick={onLogin} />
-      </FormControl>
-      <FormControl>
-        <RadioByMui
-          checked={fields.gender === 'a'}
-          value={'a'}
-          name="radio-buttons"
-          label="a"
-          onChange={(e) => handleChange(e, 'gender', fields, setFields)}
+    <FormLayout>
+      <form onSubmit={handleSubmit(onLogin)}>
+        <Controller
+          name="userId"
+          control={control}
+          defaultValue=""
+          render={({ field }) => {
+            console.log(field)
+            return (
+              <>
+                <Input {...field} placeholder="아이디" />
+                {errors.userId && <span>{errors.userId.message}</span>}
+              </>
+            )
+          }}
         />
-        <RadioByMui
-          checked={fields.gender === 'b'}
-          value={'b'}
-          name="radio-buttons"
-          label="b"
-          onChange={(e) => handleChange(e, 'gender', fields, setFields)}
+        <input
+          type="text"
+          {...register('userId')}
+          onChange={(e) => handleChange(e, 'userId', fields, setFields)}
         />
-      </FormControl>
-      <RadioButtonsGroup
-        label="BUDI"
-        defaultValue="buddy"
-        value={['buddy', 'lucy', 'maxi']}
-        onValueChange={handleValueChange}
-      />
-    </form>
+        <p style={{ color: 'red' }}>{errors.userId?.message}</p>
+
+        <TextField
+          type="password"
+          {...register('password')}
+          label="오토컴플리트"
+        />
+        <p style={{ color: 'red' }}>{errors.password?.message}</p>
+
+        <FormControl>
+          <ButtonByMui label="아이디" type={'submit'} onClick={onLogin} />
+        </FormControl>
+        <FormControl>
+          <RadioByMui
+            checked={fields.gender === 'a'}
+            value={'a'}
+            name="radio-buttons"
+            label="a"
+            onChange={(e) => handleChange(e, 'gender', fields, setFields)}
+          />
+          <RadioByMui
+            checked={fields.gender === 'b'}
+            value={'b'}
+            name="radio-buttons"
+            label="b"
+            onChange={(e) => handleChange(e, 'gender', fields, setFields)}
+          />
+        </FormControl>
+        <RadioButtonsGroup
+          label="BUDI"
+          defaultValue="buddy"
+          value={['buddy', 'lucy', 'maxi']}
+          onValueChange={handleValueChange}
+        />
+      </form>
+    </FormLayout>
   )
 }
 
-export default Login
+export default AuthenticationEmail

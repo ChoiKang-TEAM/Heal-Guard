@@ -1,4 +1,4 @@
-import { User } from 'types/interface/user'
+import { User } from 'src/types/interface/user'
 
 const basicUser: User = {
   userId: 'test',
