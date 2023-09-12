@@ -44,7 +44,12 @@ export const Button = ({
 
 export const ButtonByMui = ({ disabled = false, ...props }: ButtonMuiProps) => {
   return (
-    <MuiButton disabled={disabled} type={props.type} {...props}>
+    <MuiButton
+      className="input-button ml-10"
+      disabled={disabled}
+      type={props.type}
+      {...props}
+    >
       {props.label}
     </MuiButton>
   )

@@ -1,3 +1,7 @@
+.ml-10 {
+  margin-left: 10%;
+}
+
 .form-layout {
   display: flex;
   flex-direction: column;
@@ -9,10 +13,24 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 500px;
-  margin: 0 auto;
+  margin: 10% auto;
 
   // 직계 자식 요소들 사이의 여백 설정
   > * + * {
     margin-top: 20px;
   }
+}
+
+.input-container {
+  display: flex; // 요소들을 수평으로 배열
+  align-items: center; // 요소들을 세로로 중앙 정렬
+
+  // 직계 자식 요소들 사이의 여백 설정 (예: TextField와 ButtonByMui 사이)
+  > * + * {
+    margin-left: 20px !important;
+  }
+}
+
+.input-button {
+  height: 56px;
 }
