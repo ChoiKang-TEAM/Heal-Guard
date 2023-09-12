@@ -1,13 +1,10 @@
-import axios from 'axios'
-import {
-  AuthUserVerifyCodeByEmailInput,
-  VerificationResult,
-} from 'src/types/interface/sign-up/signUpInterface'
+import { AuthUserVerifyCodeByEmailInput } from 'src/types/interface/sign-up/signUpInterface'
 import getUerApi from 'src/apis/getUser'
 import {
   ID_IN_USE_MESSAGE,
   VERIFICATION_ERROR_MESSAGE,
 } from 'src/common/constants/messages'
+import { VerificationResult } from 'src/types/type/signUpType'
 
 const getAuthVerifyCodeByEmail = async (
   dto: AuthUserVerifyCodeByEmailInput
@@ -22,7 +19,7 @@ const getAuthVerifyCodeByEmail = async (
   }
 }
 
-const signUpUserApi = {
+const verificationUserApi = {
   getAuthVerifyCodeByEmail,
 }
-export default signUpUserApi
+export default verificationUserApi

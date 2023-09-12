@@ -1,4 +1,4 @@
-import { User } from 'src/types/interface/user'
+import { User } from 'src/types/interface/user/userInterface'
 
 const usedEmail: string[] = ['motojate@naver.com', 'maxi@soulware.kr']
 const basicUser: User = {
