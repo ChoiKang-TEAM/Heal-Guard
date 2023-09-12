@@ -5,8 +5,12 @@ import { TextField } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { ButtonByMui } from 'src/components/atoms/buttons/Button'
+import { useAppDispatch } from 'src/store'
+import { authVerifyCodeCreate } from 'src/modules/sign-up/verificationAction'
 
 const AuthenticationEmail = () => {
+  const dispatch = useAppDispatch()
+
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -20,13 +24,19 @@ const AuthenticationEmail = () => {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'onChange',
   })
 
   const createVerifyCode = () => {
-    console.log(1)
+    const dto: {
+      userId: string
+    } = {
+      userId: getValues().email,
+    }
+    dispatch(authVerifyCodeCreate(dto))
   }
   return (
     <FormLayout>

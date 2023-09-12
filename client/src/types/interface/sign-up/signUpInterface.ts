@@ -10,8 +10,3 @@ export interface SignUpUserInput {
   userId: string
   password: string
 }
-
-export type VerificationResult = {
-  code?: string
-  error?: string
-}

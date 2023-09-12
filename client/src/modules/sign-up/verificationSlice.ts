@@ -1,28 +1,34 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { authVerifyCodeCreate } from './verificationAction'
+import { VerificationState } from 'src/types/type/signUpType'
 
 const initialState: string | null = null
 
 const verificationSlice = createSlice({
   name: 'verification',
-  initialState: { verifyCode: initialState, status: 'idle', error: null },
+  initialState: {
+    verifyCode: initialState,
+    status: 'idle',
+    error: null,
+  } as VerificationState,
   reducers: {
-    clearVerifyCode: (state: {
-      verifyCode: string | null
-      status: string
-      error: string | null
-    }): void => {
+    clearVerifyCode: (state: VerificationState): void => {
       state.verifyCode = null
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loginUser.pending, (state) => {
+      .addCase(authVerifyCodeCreate.pending, (state) => {
         state.status = 'loading'
       })
-      .addCase(loginUser.fulfilled, (state, action) => {
+      .addCase(authVerifyCodeCreate.fulfilled, (state, action) => {
         state.status = 'complete'
+        if (action.payload.error) {
+          state.error = action.payload.error
+        }
+        console.log(action)
       })
-      .addCase(loginUser.rejected, (state) => {
+      .addCase(authVerifyCodeCreate.rejected, (state) => {
         state.status = 'failed'
       })
   },
