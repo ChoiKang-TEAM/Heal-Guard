@@ -11,8 +11,8 @@ const signUpSlice = createSlice({
     step: 1,
   },
   reducers: {
-    goNextStep(state) {
-      state.step += 1
+    goNextStep(state, action) {
+      state.step += action.payload
     },
   },
 })
