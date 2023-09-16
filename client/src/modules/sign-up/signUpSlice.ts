@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState: string | null = null
+const initialState = {
+  userId: null,
+  password: null,
+  usedPillList: [],
+}
 
 const signUpSlice = createSlice({
   name: 'verification',
