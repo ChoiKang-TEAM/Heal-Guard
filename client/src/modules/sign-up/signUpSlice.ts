@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { SignUpUserInput } from 'src/types/interface/sign-up/signUpInterface'
 
-const initialState = {
+const initialState: SignUpUserInput = {
   userId: null,
   password: null,
-  usedPillList: [],
+  usePillList: [],
 }
 
 const signUpSlice = createSlice({

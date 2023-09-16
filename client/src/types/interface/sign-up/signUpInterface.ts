@@ -7,6 +7,7 @@ export interface AuthVerifyCode {
 }
 
 export interface SignUpUserInput {
-  userId: string
-  password: string
+  userId: string | null
+  password: string | null
+  usePillList?: string[]
 }
