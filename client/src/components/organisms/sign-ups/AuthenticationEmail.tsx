@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import * as yup from 'yup'
 import FormLayout from 'src/components/organisms/layouts/FormLayout'
 import { TextField } from '@mui/material'
@@ -10,7 +10,7 @@ import { authVerifyCodeCreate } from 'src/modules/sign-up/verificationAction'
 
 const AuthenticationEmail = () => {
   const dispatch = useAppDispatch()
-
+  const [isCreateVerifyCode, setIsCreateVerifyCode] = useState<boolean>(false)
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -36,6 +36,7 @@ const AuthenticationEmail = () => {
     } = {
       userId: getValues().email,
     }
+    setIsCreateVerifyCode(true)
     dispatch(authVerifyCodeCreate(dto))
   }
   return (
@@ -52,6 +53,24 @@ const AuthenticationEmail = () => {
         </div>
         <p style={{ color: 'red' }}>{errors.email?.message}</p>
       </form>
+      {isCreateVerifyCode && (
+        <form onSubmit={handleSubmit(createVerifyCode)}>
+          <div className="input-container">
+            <TextField
+              type="email"
+              {...register('email')}
+              label="이메일"
+              placeholder="이메일을 입력해주세요."
+            />
+            <ButtonByMui
+              variant={'outlined'}
+              label="인증하기"
+              type={'submit'}
+            />
+          </div>
+          <p style={{ color: 'red' }}>{errors.email?.message}</p>
+        </form>
+      )}
     </FormLayout>
   )
 }
