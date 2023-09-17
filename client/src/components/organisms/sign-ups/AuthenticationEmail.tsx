@@ -49,7 +49,11 @@ const AuthenticationEmail = () => {
             label="이메일"
             placeholder="이메일을 입력해주세요."
           />
-          <ButtonByMui variant={'outlined'} label="인증하기" type={'submit'} />
+          <ButtonByMui
+            variant={'outlined'}
+            label="인증번호 발급"
+            type={'submit'}
+          />
         </div>
         <p style={{ color: 'red' }}>{errors.email?.message}</p>
       </form>
