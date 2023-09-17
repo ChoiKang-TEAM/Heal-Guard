@@ -51,12 +51,6 @@ const AuthenticationEmail = () => {
           <ButtonByMui variant={'outlined'} label="인증하기" type={'submit'} />
         </div>
         <p style={{ color: 'red' }}>{errors.email?.message}</p>
-        {/* <TextField
-          type="password"
-          {...register('password')}
-          label="오토컴플리트"
-        />
-        <p style={{ color: 'red' }}>{errors.password?.message}</p> */}
       </form>
     </FormLayout>
   )
