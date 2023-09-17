@@ -47,6 +47,9 @@ const Login = () => {
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
+    defaultValues: {
+      userId: 'motojate@naver.com',
+    },
     mode: 'onChange',
   })
 
@@ -75,16 +78,12 @@ const Login = () => {
           )
         }}
       />
-      <input
-        type="text"
-        {...register('userId')}
-        onChange={(e) => handleChange(e, 'userId', fields, setFields)}
-      />
+      <OutlinedInput type="text" {...register('userId')} />
       <p style={{ color: 'red' }}>{errors.userId?.message}</p>
 
       <OutlinedInput
         type="password"
-        {...register('password')}
+        {...register('userId')}
         label="오토컴플리트"
       />
       <p style={{ color: 'red' }}>{errors.password?.message}</p>
