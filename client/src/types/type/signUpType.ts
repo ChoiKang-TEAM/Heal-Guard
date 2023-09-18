@@ -1,10 +1,12 @@
 export type VerificationResult = {
-  code?: string
+  verifyCode?: string
   error?: string
 }
 
 export type VerificationState = {
-  verifyCode: string | null
-  status: string
-  error: string | null
+  verifyCode?: string | null
+  status?: string
+  message?: string[]
+  userId?: string
+  error?: string
 }
