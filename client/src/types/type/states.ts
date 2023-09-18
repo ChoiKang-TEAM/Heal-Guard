@@ -1,4 +1,4 @@
-export type VerificationStatusType =
+export type VerificationStateType =
   | 'Idle'
   | 'Created'
   | 'Expired'
