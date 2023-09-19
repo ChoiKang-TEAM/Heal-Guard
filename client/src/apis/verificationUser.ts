@@ -10,7 +10,7 @@ const getAuthVerifyCodeByEmail = async (
     if (isUsed) return { verificationState: 'InUse' }
     else return { verifyCode: '111111', verificationState: 'Created' }
   } catch (e) {
-    console.error('Error while checking user Email: ', e)
+    console.error('네트워크 통신 오류', e)
     return { verificationState: 'Error' }
   }
 }
