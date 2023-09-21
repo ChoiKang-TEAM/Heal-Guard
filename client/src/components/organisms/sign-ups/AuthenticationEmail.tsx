@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { ButtonByMui } from 'src/components/atoms/buttons/Button'
 import { useAppDispatch } from 'src/store'
-import { authVerifyCodeCreate } from 'src/modules/sign-up/verificationAction'
 
 const AuthenticationEmail = () => {
   const dispatch = useAppDispatch()
@@ -31,13 +30,7 @@ const AuthenticationEmail = () => {
   })
 
   const createVerifyCode = () => {
-    const dto: {
-      userId: string
-    } = {
-      userId: getValues().email,
-    }
     setIsCreateVerifyCode(true)
-    dispatch(authVerifyCodeCreate(dto))
   }
   return (
     <FormLayout>
