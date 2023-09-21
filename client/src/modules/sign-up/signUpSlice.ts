@@ -16,11 +16,14 @@ const signUpSlice = createSlice({
     step: 1,
   },
   reducers: {
+    setUserId(state, action) {
+      state.signUpUserInputData.userId = action.payload
+    },
     goNextStep(state, action) {
       state.step += action.payload
     },
   },
 })
 
-export const { goNextStep } = signUpSlice.actions
+export const { goNextStep, setUserId } = signUpSlice.actions
 export default signUpSlice

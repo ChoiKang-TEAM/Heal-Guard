@@ -1,14 +1,19 @@
 import { VerificationStateType } from '../type/states'
 
-export type VerificationResult = {
-  verifyCode?: string
+export interface VerificationResult {
   verificationState: VerificationStateType
+  expiredTime?: Date
 }
 
-export type VerificationState = {
+export interface VerificationState {
   verifyCode?: string | null
   status?: string
   message?: string[]
   userId?: string
   error?: string
+}
+
+export interface VerifyCodeState {
+  state: VerificationStateType
+  expiredTime: Date | null
 }

@@ -8,7 +8,7 @@ const getAuthVerifyCodeByEmail = async (
   try {
     const isUsed = await getUerApi.isUsedUserId(dto.userId)
     if (isUsed) return { verificationState: 'InUse' }
-    else return { verifyCode: '111111', verificationState: 'Created' }
+    else return { verificationState: 'Created' }
   } catch (e) {
     console.error('네트워크 통신 오류', e)
     return { verificationState: 'Error' }
