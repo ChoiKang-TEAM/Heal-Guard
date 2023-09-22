@@ -22,7 +22,10 @@ const Login = () => {
   })
 
   const schema = yup.object().shape({
-    userId: yup.string().email().required('아이디를 입력해주세요.'),
+    userId: yup
+      .string()
+      .email('이메일 형식으로 입력해주세요.')
+      .required('아이디를 입력해주세요.'),
     password: yup.string().required('비밀번호를 입력해주세요.'),
   })
 
@@ -34,6 +37,10 @@ const Login = () => {
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
+    defaultValues: {
+      userId: '',
+      password: '',
+    },
   })
 
   const onLogin = () => {
@@ -61,7 +68,6 @@ const Login = () => {
                 variant={'outlined'}
                 label="아이디"
                 margin={'normal'}
-                required
                 id="userId"
                 autoComplete={'userId'}
                 autoFocus
@@ -82,7 +88,6 @@ const Login = () => {
                 variant={'outlined'}
                 label="비밀번호"
                 margin={'normal'}
-                required
                 id="password"
                 autoComplete={'password'}
                 fullWidth
