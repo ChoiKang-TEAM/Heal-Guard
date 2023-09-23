@@ -14,6 +14,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
+import LoginInputForm from 'src/components/molecules/forms/LoginInputForm'
 
 const Login = () => {
   const [fields, setFields] = useState<User>({
@@ -48,64 +49,68 @@ const Login = () => {
     console.log(errors)
   }
   return (
-    <Container component="main" maxWidth="xs">
-      <Paper elevation={3} style={{ padding: '20px', marginTop: '100px' }}>
-        <Typography component="h1" variant="h5">
-          로그인
-        </Typography>
+    <>
+      <Container component="main" maxWidth="xs">
+        <Paper elevation={3} style={{ padding: '20px', marginTop: '100px' }}>
+          <Typography component="h1" variant="h5">
+            로그인
+          </Typography>
 
-        <form
-          onSubmit={handleSubmit(onLogin)}
-          noValidate
-          style={{ marginTop: '20px' }}
-        >
-          <Controller
-            name={'userId'}
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                variant={'outlined'}
-                label="아이디"
-                margin={'normal'}
-                id="userId"
-                autoComplete={'userId'}
-                autoFocus
-                fullWidth
-              />
-            )}
-          />
-          {errors.userId && (
-            <Typography color={'error'}>{errors.userId.message}</Typography>
-          )}
-          <Controller
-            name={'password'}
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                type={'password'}
-                variant={'outlined'}
-                label="비밀번호"
-                margin={'normal'}
-                id="password"
-                autoComplete={'password'}
-                fullWidth
-              />
-            )}
-          />
-          <Button
-            type={'submit'}
-            fullWidth
-            variant="contained"
-            color="primary"
+          <form
+            onSubmit={handleSubmit(onLogin)}
+            noValidate
             style={{ marginTop: '20px' }}
           >
-            로그인
-          </Button>
-        </form>
-      </Paper>
-    </Container>
+            <Controller
+              name={'userId'}
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  variant={'outlined'}
+                  label="아이디"
+                  margin={'normal'}
+                  id="userId"
+                  autoComplete={'userId'}
+                  autoFocus
+                  fullWidth
+                />
+              )}
+            />
+            {errors.userId && (
+              <Typography color={'error'}>{errors.userId.message}</Typography>
+            )}
+            <Controller
+              name={'password'}
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  type={'password'}
+                  variant={'outlined'}
+                  label="비밀번호"
+                  margin={'normal'}
+                  id="password"
+                  autoComplete={'password'}
+                  fullWidth
+                />
+              )}
+            />
+            <Button
+              type={'submit'}
+              fullWidth
+              variant="contained"
+              color="primary"
+              style={{ marginTop: '20px' }}
+            >
+              로그인
+            </Button>
+          </form>
+        </Paper>
+      </Container>
+
+      <LoginInputForm />
+    </>
   )
 }
 

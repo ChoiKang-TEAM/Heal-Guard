@@ -9,17 +9,11 @@ import { TextField } from '@mui/material'
 interface Props<T extends yup.AnyObject> {
   schema: yup.ObjectSchema<T>
   name: string
-  label: string
-  id?: string
-  autoComplete?: string
 }
 
 const ValidationInput = <T extends yup.AnyObject>({
   schema,
   name,
-  label,
-  id,
-  autoComplete,
 }: Props<T>) => {
   type FormData = yup.InferType<typeof schema>
   const {
@@ -40,7 +34,6 @@ const ValidationInput = <T extends yup.AnyObject>({
           label="아이디"
           margin={'normal'}
           id="userId"
-          autoComplete={'userId'}
           autoFocus
           fullWidth
         />
