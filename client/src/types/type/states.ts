@@ -6,3 +6,4 @@ export type VerificationStateType =
   | 'Authentication'
   | 'Mismatched'
   | 'Error'
+export type InputType = 'text' | 'password' | 'number'
