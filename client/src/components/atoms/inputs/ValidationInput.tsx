@@ -14,7 +14,7 @@ type ControlledTextFieldProps<T extends FieldValues> = {
   autoComplete?: string
   autoFocus?: boolean
 }
-const ControlledTextField = <T extends FieldValues>({
+const ValidationInput = <T extends FieldValues>({
   control,
   name,
   label,
@@ -46,4 +46,4 @@ const ControlledTextField = <T extends FieldValues>({
   )
 }
 
-export default ControlledTextField
+export default ValidationInput

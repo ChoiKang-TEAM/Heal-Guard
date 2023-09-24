@@ -14,7 +14,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import ControlledTextField from 'src/components/atoms/inputs/ControlledTextField'
+import ValidationInput from 'src/components/atoms/inputs/ValidationInput'
 
 const LoginInputForm = () => {
   const schema = yup.object().shape({
@@ -55,7 +55,7 @@ const LoginInputForm = () => {
         noValidate
         style={{ marginTop: '20px' }}
       >
-        <ControlledTextField<FormData>
+        <ValidationInput<FormData>
           control={control}
           name="userId"
           label="아이디"
@@ -64,7 +64,7 @@ const LoginInputForm = () => {
           autoFocus
           errors={errors}
         />
-        <ControlledTextField<FormData>
+        <ValidationInput<FormData>
           control={control}
           name="password"
           label="비밀번호"
