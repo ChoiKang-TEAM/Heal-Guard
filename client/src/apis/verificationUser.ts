@@ -9,15 +9,17 @@ const getAuthVerifyCodeByEmail = async (
   try {
     const isUsed = await getUerApi.isUsedUserId(dto.userId)
     const response = await axios.get('/api/create/code')
-    if (isUsed) return { verificationState: 'InUse' }
-    else
+    if (response.data.code === '1000')
       return {
         verificationState: 'Created',
         expiredTime: response.data.expiredTime,
       }
-  } catch (e) {
+    else return { verificationState: 'Error' }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
     console.error('네트워크 통신 오류', e)
-    return { verificationState: 'Error' }
+    if (e.response.data.code === '2003') return { verificationState: 'InUse' }
+    else return { verificationState: 'Error' }
   }
 }
 
