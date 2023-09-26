@@ -13,10 +13,8 @@ const getAuthVerifyCodeByEmail = async (
         expiredTime: response.data.expiredTime,
       }
     else return { verificationState: 'Error' }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {
-    console.error('네트워크 통신 오류', e)
-    if (e.response.data.code === '2003') return { verificationState: 'InUse' }
+    if (e?.response?.code === '2003') return { verificationState: 'InUse' }
     else return { verificationState: 'Error' }
   }
 }
