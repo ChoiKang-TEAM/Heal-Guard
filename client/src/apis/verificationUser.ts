@@ -3,10 +3,10 @@ import { VerificationResult } from 'src/types/interface/states'
 import axios from 'axios'
 
 const getAuthVerifyCodeByEmail = async (
-  dto: AuthUserVerifyCodeByEmailInput
+  params: AuthUserVerifyCodeByEmailInput
 ): Promise<VerificationResult> => {
   try {
-    const response = await axios.get('/api/create/code')
+    const response = await axios.post('/api/create/code', params)
     if (response.data.code === '1000')
       return {
         verificationState: 'Created',
