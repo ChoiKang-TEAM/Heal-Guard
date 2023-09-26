@@ -2,7 +2,7 @@ export interface AuthUserVerifyCodeByEmailInput {
   userId: string
 }
 
-export interface AuthVerifyCode {
+export interface AuthVerifyCode extends AuthUserVerifyCodeByEmailInput {
   verifyCode: string
 }
 
