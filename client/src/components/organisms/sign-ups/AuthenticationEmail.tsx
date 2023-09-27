@@ -52,9 +52,7 @@ const AuthenticationEmail = () => {
             autoFocus
             errors={errors}
           />
-          <Button variant={'outlined'} type={'submit'}>
-            인증하기
-          </Button>
+          <ButtonByMui variant={'outlined'} label="인증하기" type={'submit'} />
         </div>
       </form>
       {isCreateVerifyCode && (
