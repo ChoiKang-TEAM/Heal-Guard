@@ -7,9 +7,11 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { ButtonByMui } from 'src/components/atoms/buttons/Button'
 import { useAppDispatch } from 'src/store'
 import ValidationInput from 'src/components/atoms/inputs/ValidationInput'
+import useEmailVerification from 'src/hooks/useEmailVerification'
 
 const AuthenticationEmail = () => {
   const dispatch = useAppDispatch()
+  const { inputCode, createVerifyCode } = useEmailVerification()
   const [isCreateVerifyCode, setIsCreateVerifyCode] = useState<boolean>(false)
   const schema = yup.object().shape({
     email: yup
@@ -23,6 +25,7 @@ const AuthenticationEmail = () => {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
     control,
   } = useForm<FormData>({
@@ -32,12 +35,13 @@ const AuthenticationEmail = () => {
     },
   })
 
-  const createVerifyCode = () => {
+  const verifyCodeCreate = () => {
     setIsCreateVerifyCode(true)
+    createVerifyCode(getValues().email)
   }
   return (
     <FormLayout>
-      <form onSubmit={handleSubmit(createVerifyCode)}>
+      <form onSubmit={handleSubmit(verifyCodeCreate)}>
         <div className="input-container">
           <ValidationInput<FormData>
             control={control}
@@ -54,7 +58,7 @@ const AuthenticationEmail = () => {
         </div>
       </form>
       {isCreateVerifyCode && (
-        <form onSubmit={handleSubmit(createVerifyCode)}>
+        <form onSubmit={handleSubmit(verifyCodeCreate)}>
           <div className="input-container">
             <TextField
               type="email"

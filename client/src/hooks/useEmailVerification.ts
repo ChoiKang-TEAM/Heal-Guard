@@ -1,7 +1,7 @@
-import { useState } from 'react'
 import verificationUserApi from 'src/apis/verificationUser'
+import { useState } from 'react'
 import { AuthUserVerifyCodeByEmailInput } from 'src/types/interface/sign-up/signUpInterface'
-import { VerificationState, VerifyCodeState } from 'src/types/interface/states'
+import { VerifyCodeState } from 'src/types/interface/states'
 
 const useEmailVerification = () => {
   const [field, setField] = useState<VerifyCodeState>({
@@ -9,11 +9,6 @@ const useEmailVerification = () => {
     expiredTime: null,
   })
   const [inputCode, setInputCode] = useState<string>('')
-
-  const handleFieldChange = (data: VerificationState) => {
-    console.log(field)
-    console.log(data)
-  }
 
   const createVerifyCode = async (userId: string) => {
     const dto: AuthUserVerifyCodeByEmailInput = { userId }
@@ -24,12 +19,12 @@ const useEmailVerification = () => {
 
   const state = {
     inputCode,
+    field,
   }
 
   const action = {
     setField,
     setInputCode,
-    handleFieldChange,
     createVerifyCode,
   }
 
