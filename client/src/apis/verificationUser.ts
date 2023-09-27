@@ -9,11 +9,19 @@ const getAuthVerifyCodeByEmail = async (
   params: AuthUserVerifyCodeByEmailInput
 ): Promise<VerificationResult> => {
   try {
-    const response = await axios.post('/api/create/code', params)
-    if (response.data.code === '1000')
+    const response: {
+      data: {
+        code: string
+        result: {
+          expiredTime: Date
+        }
+      }
+    } = await axios.post('/api/create/code', params)
+    const { code, result } = response.data
+    if (code === '1000')
       return {
         verificationState: 'Created',
-        expiredTime: response.data.expiredTime,
+        expiredTime: result.expiredTime,
       }
     else return { verificationState: 'Error' }
   } catch (e: any) {
@@ -39,5 +47,6 @@ const getConfirmVerifyCode = async (params: AuthVerifyCode) => {
 
 const verificationUserApi = {
   getAuthVerifyCodeByEmail,
+  getConfirmVerifyCode,
 }
 export default verificationUserApi
