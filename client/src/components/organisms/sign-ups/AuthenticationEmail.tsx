@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import * as yup from 'yup'
 import FormLayout from 'src/components/organisms/layouts/FormLayout'
-import { TextField } from '@mui/material'
+import { Button, TextField } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { ButtonByMui } from 'src/components/atoms/buttons/Button'
 import { useAppDispatch } from 'src/store'
+import ValidationInput from 'src/components/atoms/inputs/ValidationInput'
 
 const AuthenticationEmail = () => {
   const dispatch = useAppDispatch()
@@ -23,10 +24,12 @@ const AuthenticationEmail = () => {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
+    control,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
-    mode: 'onChange',
+    defaultValues: {
+      email: '',
+    },
   })
 
   const createVerifyCode = () => {
@@ -36,19 +39,19 @@ const AuthenticationEmail = () => {
     <FormLayout>
       <form onSubmit={handleSubmit(createVerifyCode)}>
         <div className="input-container">
-          <TextField
-            type="email"
-            {...register('email')}
+          <ValidationInput<FormData>
+            control={control}
+            name="email"
             label="이메일"
-            placeholder="이메일을 입력해주세요."
+            id="email"
+            autoComplete="email"
+            autoFocus
+            errors={errors}
           />
-          <ButtonByMui
-            variant={'outlined'}
-            label="인증번호 발급"
-            type={'submit'}
-          />
+          <Button variant={'outlined'} type={'submit'}>
+            인증하기
+          </Button>
         </div>
-        <p style={{ color: 'red' }}>{errors.email?.message}</p>
       </form>
       {isCreateVerifyCode && (
         <form onSubmit={handleSubmit(createVerifyCode)}>
