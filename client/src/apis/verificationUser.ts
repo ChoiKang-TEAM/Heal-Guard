@@ -16,7 +16,7 @@ const getAuthVerifyCodeByEmail = async (
           expiredTime: Date
         }
       }
-    } = await axios.post('/api/create/code', params)
+    } = await axios.get('/api/create/code') // TODO: POST 요청으로 변경해야함
     const { code, result } = response.data
     if (code === '1000')
       return {
