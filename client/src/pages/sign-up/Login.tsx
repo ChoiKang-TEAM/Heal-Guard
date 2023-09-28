@@ -1,8 +1,15 @@
 import React from 'react'
 import LoginInputForm from 'src/components/molecules/forms/LoginInputForm'
 import { Button, Container, Paper } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
+  const navigate = useNavigate()
+  const goSignUpPage = () => {
+    navigate('/sign-up', {
+      replace: true,
+    })
+  }
   return (
     <Container component="main" maxWidth="xs">
       <LoginInputForm />
@@ -13,6 +20,7 @@ const Login = () => {
           variant="contained"
           color="primary"
           style={{ marginTop: '20px' }}
+          onClick={goSignUpPage}
         >
           회원가입
         </Button>
