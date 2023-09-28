@@ -8,7 +8,7 @@ const Login = () => {
       <LoginInputForm />
       <Paper elevation={3} style={{ padding: '20px', marginTop: '5px' }}>
         <Button
-          type={'submit'}
+          type={'button'}
           fullWidth
           variant="contained"
           color="primary"
@@ -17,13 +17,22 @@ const Login = () => {
           회원가입
         </Button>
         <Button
-          type={'submit'}
+          type={'button'}
           fullWidth
           variant="contained"
           color="primary"
           style={{ marginTop: '20px' }}
         >
           비밀번호 찾기
+        </Button>
+        <Button
+          type={'button'}
+          fullWidth
+          variant="contained"
+          color="primary"
+          style={{ marginTop: '20px' }}
+        >
+          통합 회원가입
         </Button>
       </Paper>
     </Container>
