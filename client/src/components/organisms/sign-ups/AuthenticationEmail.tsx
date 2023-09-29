@@ -5,12 +5,10 @@ import { Button, TextField } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { ButtonByMui } from 'src/components/atoms/buttons/Button'
-import { useAppDispatch } from 'src/store'
 import ValidationInput from 'src/components/atoms/inputs/ValidationInput'
 import useEmailVerification from 'src/hooks/useEmailVerification'
 
 const AuthenticationEmail = () => {
-  const dispatch = useAppDispatch()
   const { inputCode, createVerifyCode } = useEmailVerification()
   const [isCreateVerifyCode, setIsCreateVerifyCode] = useState<boolean>(false)
   const schema = yup.object().shape({
