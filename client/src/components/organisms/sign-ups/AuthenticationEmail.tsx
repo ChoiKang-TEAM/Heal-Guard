@@ -57,8 +57,8 @@ const AuthenticationEmail = () => {
         <form onSubmit={handleSubmit(verifyCodeCreate)}>
           <div className="input-container">
             <TextField
-              type="email"
-              {...register('email')}
+              type={'text'}
+              value={inputCode}
               label="이메일"
               placeholder="이메일을 입력해주세요."
             />
