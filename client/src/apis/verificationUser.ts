@@ -30,17 +30,20 @@ const getAuthVerifyCodeByEmail = async (
   }
 }
 
-const getConfirmVerifyCode = async (params: AuthVerifyCode) => {
+const getConfirmVerifyCode = async (
+  params: AuthVerifyCode
+): Promise<VerificationResult> => {
   try {
     const response = await axios.post('/api/confirm/code', params)
     if (response.data.code === '1000')
       return {
-        verificationState: 'Created',
-        expiredTime: response.data.expiredTime,
+        verificationState: 'Authentication',
       }
     else return { verificationState: 'Error' }
   } catch (e: any) {
-    if (e?.response?.code === '2003') return { verificationState: 'InUse' }
+    if (e?.response?.code === '2000') return { verificationState: 'Mismatched' }
+    else if (e?.response?.code === '2001')
+      return { verificationState: 'Expired' }
     else return { verificationState: 'Error' }
   }
 }
