@@ -1,3 +1,4 @@
 {
-  "/api/create/code": "/emailValidate"
+  "/api/create/code": "/emailValidate",
+  "/api/confirm/code": "/confirmEmailValidate"
 }

@@ -1,5 +1,8 @@
 {
   "emailValidate": {
     "code": "1000"
+  },
+  "confirmEmailValidate": {
+    "code": "1000"
   }
 }
