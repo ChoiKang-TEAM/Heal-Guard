@@ -1,5 +1,5 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common'
-import { SendMailDto } from './dto/email-verification.dto'
+import { ConfirmVerifyCodeDto, SendMailDto } from './dto/email-verification.dto'
 import { EmailVerificationService } from './email-verification.service'
 import { ApiResponse } from 'src/shared/dtos/api-response.dto'
 
@@ -10,7 +10,12 @@ export class EmailVerificationController {
   @Post('/send')
   @HttpCode(200)
   async sendMail(@Body() sendMailDto: SendMailDto): Promise<ApiResponse<null>> {
-    console.log(sendMailDto)
     return this.emailVerificationService.sendVerificationEMail(sendMailDto)
+  }
+
+  @Post('/confirm')
+  @HttpCode(200)
+  async confirmVerifyCode(@Body() confirmVerifyCodeDto: ConfirmVerifyCodeDto): Promise<ApiResponse<null>> {
+    return this.emailVerificationService.confirmVerificationCode(confirmVerifyCodeDto)
   }
 }
