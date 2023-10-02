@@ -1,16 +1,27 @@
-import React, { useState } from 'react'
+import React from 'react'
 import * as yup from 'yup'
 import FormLayout from 'src/components/organisms/layouts/FormLayout'
-import { Button, TextField } from '@mui/material'
+import { FormControl, FormHelperText, TextField } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { ButtonByMui } from 'src/components/atoms/buttons/Button'
 import ValidationInput from 'src/components/atoms/inputs/ValidationInput'
 import useEmailVerification from 'src/hooks/useEmailVerification'
+import { VERIFICATION_ERROR_MESSAGE } from 'src/common/constants/messages'
 
 const AuthenticationEmail = () => {
-  const { inputCode, createVerifyCode } = useEmailVerification()
-  const [isCreateVerifyCode, setIsCreateVerifyCode] = useState<boolean>(false)
+  const {
+    field,
+    inputCode,
+    minutes,
+    seconds,
+    createVerifyCode,
+    handleSetInputCode,
+    resetField,
+    resetInputCode,
+    confirmVerifyCode,
+  } = useEmailVerification()
+
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -21,7 +32,6 @@ const AuthenticationEmail = () => {
   type FormData = yup.InferType<typeof schema>
 
   const {
-    register,
     handleSubmit,
     getValues,
     formState: { errors },
@@ -34,42 +44,73 @@ const AuthenticationEmail = () => {
   })
 
   const verifyCodeCreate = () => {
-    setIsCreateVerifyCode(true)
+    resetInputCode()
     createVerifyCode(getValues().email)
   }
+
+  const verifyCodeConfirm = () => {
+    confirmVerifyCode(getValues().email)
+  }
+
   return (
     <FormLayout>
       <form onSubmit={handleSubmit(verifyCodeCreate)}>
-        <div className="input-container">
-          <ValidationInput<FormData>
-            control={control}
-            name="email"
-            label="이메일"
-            id="email"
-            autoComplete="email"
-            autoFocus
-            errors={errors}
-          />
-          <ButtonByMui variant={'outlined'} label="인증하기" type={'submit'} />
-        </div>
-      </form>
-      {isCreateVerifyCode && (
-        <form onSubmit={handleSubmit(verifyCodeCreate)}>
+        <FormControl
+          error={field.state !== 'Created' && field.state !== 'Authentication'}
+          variant={'standard'}
+        >
           <div className="input-container">
-            <TextField
-              type={'text'}
-              value={inputCode}
+            <ValidationInput<FormData>
+              control={control}
+              name="email"
               label="이메일"
-              placeholder="이메일을 입력해주세요."
+              id="email"
+              autoComplete="email"
+              autoFocus
+              errors={errors}
+              onChangeExtends={resetField}
+              disabled={field.state === 'Authentication'}
             />
             <ButtonByMui
               variant={'outlined'}
-              label="인증하기"
+              label="인증 번호 발송"
               type={'submit'}
+              disabled={field.state === 'Authentication'}
             />
           </div>
-          <p style={{ color: 'red' }}>{errors.email?.message}</p>
-        </form>
+          <FormHelperText>
+            {VERIFICATION_ERROR_MESSAGE[field.state].map((message, idx) => (
+              <React.Fragment key={idx}>
+                <span>{message}</span> <br />
+              </React.Fragment>
+            ))}
+          </FormHelperText>
+        </FormControl>
+      </form>
+      {(field.state === 'Created' || field.state === 'Mismatched') && (
+        <>
+          <p>
+            인증 유효시간 : {String(minutes).padStart(2, '0')} :{' '}
+            {String(seconds).padStart(2, '0')}
+          </p>
+          <form onSubmit={verifyCodeConfirm}>
+            <div className="input-container">
+              <TextField
+                type={'text'}
+                value={inputCode}
+                label="인증번호"
+                placeholder="인증번호"
+                fullWidth
+                onChange={handleSetInputCode}
+              />
+              <ButtonByMui
+                variant={'outlined'}
+                label="인증하기"
+                onClick={verifyCodeConfirm}
+              />
+            </div>
+          </form>
+        </>
       )}
     </FormLayout>
   )
