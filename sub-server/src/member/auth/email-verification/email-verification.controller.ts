@@ -9,7 +9,7 @@ export class EmailVerificationController {
 
   @Post('/send')
   @HttpCode(200)
-  async sendMail(@Body() sendMailDto: SendMailDto): Promise<ApiResponse<null>> {
+  async sendMail(@Body() sendMailDto: SendMailDto): Promise<ApiResponse<{ validTime: Date }>> {
     return this.emailVerificationService.sendVerificationEmail(sendMailDto)
   }
 

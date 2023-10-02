@@ -37,7 +37,7 @@ export class EmailVerificationService {
     return existingUser ? true : false
   }
 
-  async sendVerificationEmail(dto: SendMailDto): Promise<ApiResponse<null>> {
+  async sendVerificationEmail(dto: SendMailDto): Promise<ApiResponse<{ validTime: Date }>> {
     const { userId } = dto
     const randomNumber = generateRandomSixDigitString()
     const inUsedUserId = await this.checkUserExistence(userId)
@@ -61,10 +61,13 @@ export class EmailVerificationService {
         subject: '인증 번호 발급',
         html: `<h3>${randomNumber}</h3>`
       }
-      await transport.sendMail(mailOptions)
+      // await transport.sendMail(mailOptions) TODO: 실제 메일은 안 가지게 설정
 
       return {
-        code: 1000
+        code: 1000,
+        result: {
+          validTime: getValidTime(10)
+        }
       }
     } catch (e) {
       await this.prisma.emailVerification.delete({
