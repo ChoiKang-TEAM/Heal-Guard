@@ -9,3 +9,15 @@ export const handleChange = <T>(
   const { value } = event.target
   setFields((prevFields) => ({ ...prevFields, [fieldName]: value }))
 }
+
+export const handleTimeDifference = (
+  dataDate?: Date
+): { minutes: number; seconds: number } => {
+  if (!dataDate) return { minutes: 0, seconds: 0 }
+  const target = new Date(dataDate)
+  const now = new Date()
+  const diff = Math.max(target.getTime() - now.getTime(), 0)
+  const minutes = Math.floor(diff / (1000 * 60))
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000)
+  return { minutes, seconds }
+}

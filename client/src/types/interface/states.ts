@@ -15,5 +15,4 @@ export interface VerificationState {
 
 export interface VerifyCodeState {
   state: VerificationStateType
-  expiredTime: Date | null
 }

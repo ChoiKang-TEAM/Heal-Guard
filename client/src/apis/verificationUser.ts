@@ -17,7 +17,6 @@ const getAuthVerifyCodeByEmail = async (
         }
       }
     } = await axios.post('/api/email/verification/send', params)
-    console.log(response)
     const { code, result } = response.data
     if (code === 1000)
       return {
@@ -35,11 +34,17 @@ const getConfirmVerifyCode = async (
   params: AuthVerifyCode
 ): Promise<VerificationResult> => {
   try {
-    const response = await axios.post('/api/confirm/code', params)
-    if (response.data.code === '1000')
+    const response: {
+      data: {
+        code: number
+      }
+    } = await axios.post('/api/email/verification/confirm', params)
+    if (response.data.code === 1000)
       return {
         verificationState: 'Authentication',
       }
+    else if (response.data.code === 3001)
+      return { verificationState: 'Mismatched' }
     else return { verificationState: 'Error' }
   } catch (e: any) {
     if (e?.response?.code === '2000') return { verificationState: 'Mismatched' }
