@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common'
 import { PrismaService } from 'src/shared/prisma/prisma.service'
 import { ConfirmVerifyCodeDto, SendMailDto } from './dto/email-verification.dto'
 import { ApiResponse } from 'src/shared/dtos/api-response.dto'
@@ -11,30 +11,8 @@ import { EmailVerification } from '@prisma/client'
 export class EmailVerificationService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async sendVerificationEMail(dto: SendMailDto): Promise<ApiResponse<null>> {
-    const { userId } = dto
-    this.checkUserExistence(userId)
-    const randomNumber = generateRandomSixDigitString()
-    const emailVerification = await this.upsertEmailVerification(userId, randomNumber)
-    await this.sendEmail(userId, randomNumber, emailVerification)
-    return {
-      code: 1000
-    }
-  }
-
-  private async checkUserExistence(userId: string): Promise<void> {
-    const existingUser = await this.prisma.user.findUnique({
-      where: {
-        userId: userId
-      }
-    })
-    if (existingUser) {
-      throw new BadRequestException({ code: 3000 })
-    }
-  }
-
   private async upsertEmailVerification(userId: string, randomNumber: string): Promise<EmailVerification> {
-    return await this.prisma.emailVerification.upsert({
+    return this.prisma.emailVerification.upsert({
       where: {
         userId: userId
       },
@@ -50,7 +28,26 @@ export class EmailVerificationService {
     })
   }
 
-  private async sendEmail(userId: string, randomNumber: string, emailVerification: EmailVerification): Promise<void> {
+  private async checkUserExistence(userId: string): Promise<boolean> {
+    const existingUser = await this.prisma.user.findUnique({
+      where: {
+        userId: userId
+      }
+    })
+    return existingUser ? true : false
+  }
+
+  async sendVerificationEmail(dto: SendMailDto): Promise<ApiResponse<null>> {
+    const { userId } = dto
+    const randomNumber = generateRandomSixDigitString()
+    const inUsedUserId = await this.checkUserExistence(userId)
+    if (inUsedUserId)
+      throw new BadRequestException({
+        code: 3000
+      })
+
+    const emailVerification = await this.upsertEmailVerification(userId, randomNumber)
+
     try {
       const transport = nodeMailer.createTransport({
         service: 'gmail',
@@ -65,13 +62,17 @@ export class EmailVerificationService {
         html: `<h3>${randomNumber}</h3>`
       }
       await transport.sendMail(mailOptions)
+
+      return {
+        code: 1000
+      }
     } catch (e) {
       await this.prisma.emailVerification.delete({
         where: {
           id: emailVerification.id
         }
       })
-      throw new Error('이메일 전송에 실패했습니다.')
+      throw new InternalServerErrorException('이메일 전송에 실패했습니다.')
     }
   }
 

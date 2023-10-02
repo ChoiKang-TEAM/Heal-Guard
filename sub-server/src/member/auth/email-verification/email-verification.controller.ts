@@ -10,7 +10,7 @@ export class EmailVerificationController {
   @Post('/send')
   @HttpCode(200)
   async sendMail(@Body() sendMailDto: SendMailDto): Promise<ApiResponse<null>> {
-    return this.emailVerificationService.sendVerificationEMail(sendMailDto)
+    return this.emailVerificationService.sendVerificationEmail(sendMailDto)
   }
 
   @Post('/confirm')
