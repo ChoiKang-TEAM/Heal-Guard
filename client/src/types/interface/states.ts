@@ -2,7 +2,7 @@ import { VerificationStateType } from '../type/states'
 
 export interface VerificationResult {
   verificationState: VerificationStateType
-  expiredTime?: Date
+  validTime?: Date
 }
 
 export interface VerificationState {

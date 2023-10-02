@@ -11,21 +11,22 @@ const getAuthVerifyCodeByEmail = async (
   try {
     const response: {
       data: {
-        code: string
+        code: number
         result: {
-          expiredTime: Date
+          validTime: Date
         }
       }
-    } = await axios.get('/api/create/code') // TODO: POST 요청으로 변경해야함
+    } = await axios.post('/api/email/verification/send', params)
+    console.log(response)
     const { code, result } = response.data
-    if (code === '1000')
+    if (code === 1000)
       return {
         verificationState: 'Created',
-        expiredTime: result.expiredTime,
+        validTime: result.validTime,
       }
     else return { verificationState: 'Error' }
   } catch (e: any) {
-    if (e?.response?.code === '2003') return { verificationState: 'InUse' }
+    if (e?.response?.data?.code === 3000) return { verificationState: 'InUse' }
     else return { verificationState: 'Error' }
   }
 }

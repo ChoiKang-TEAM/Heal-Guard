@@ -12,9 +12,9 @@ const useEmailVerification = () => {
 
   const createVerifyCode = async (userId: string) => {
     const dto: AuthUserVerifyCodeByEmailInput = { userId }
-    const { verificationState, expiredTime } =
+    const { verificationState, validTime } =
       await verificationUserApi.getAuthVerifyCodeByEmail(dto)
-    setField({ state: verificationState, expiredTime: expiredTime ?? null })
+    setField({ state: verificationState, expiredTime: validTime ?? null })
   }
 
   const confirmVerifyCode = async (userId: string) => {

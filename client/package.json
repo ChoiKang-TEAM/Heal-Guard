@@ -78,5 +78,5 @@
     "storybook": "^7.3.2",
     "webpack": "^5.88.2"
   },
-  "proxy": "http://localhost:3001"
+  "proxy": "http://localhost:3300"
 }
