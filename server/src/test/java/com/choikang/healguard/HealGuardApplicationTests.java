@@ -1,10 +1,10 @@
-package com.choikang.pillguard;
+package com.choikang.healguard;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PillGuardApplicationTests {
+class HealGuardApplicationTests {
 
 	@Test
 	void contextLoads() {

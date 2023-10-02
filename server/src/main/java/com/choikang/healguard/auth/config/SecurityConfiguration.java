@@ -1,4 +1,4 @@
-package com.choikang.pillguard.auth.config;
+package com.choikang.healguard.auth.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,5 +47,4 @@ public class SecurityConfiguration {
         source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
     }
-
 }
