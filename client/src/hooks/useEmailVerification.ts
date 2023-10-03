@@ -4,8 +4,11 @@ import { AuthUserVerifyCodeByEmailInput } from 'src/types/interface/sign-up/sign
 import { VerifyCodeState } from 'src/types/interface/states'
 import { handleTimeDifference } from 'src/utils/handlers/dataChangeHandler'
 import { useTimer } from './useInterval'
+import { useAppDispatch } from 'src/store'
+import { setUserId } from 'src/modules/sign-up/signUpSlice'
 
 const useEmailVerification = () => {
+  const dispatch = useAppDispatch()
   const [field, setField] = useState<VerifyCodeState>({
     state: 'Idle',
   })
@@ -47,6 +50,8 @@ const useEmailVerification = () => {
     const { verificationState } =
       await verificationUserApi.getConfirmVerifyCode(params)
     setField({ state: verificationState })
+    if (verificationState === 'Authentication')
+      return dispatch(setUserId(userId))
   }
 
   const state = {
