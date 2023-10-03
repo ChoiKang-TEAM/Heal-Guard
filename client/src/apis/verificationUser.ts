@@ -11,21 +11,21 @@ const getAuthVerifyCodeByEmail = async (
   try {
     const response: {
       data: {
-        code: string
+        code: number
         result: {
-          expiredTime: Date
+          validTime: Date
         }
       }
-    } = await axios.get('/api/create/code') // TODO: POST 요청으로 변경해야함
+    } = await axios.post('/api/email/verification/send', params)
     const { code, result } = response.data
-    if (code === '1000')
+    if (code === 1000)
       return {
         verificationState: 'Created',
-        expiredTime: result.expiredTime,
+        validTime: result.validTime,
       }
     else return { verificationState: 'Error' }
   } catch (e: any) {
-    if (e?.response?.code === '2003') return { verificationState: 'InUse' }
+    if (e?.response?.data?.code === 3000) return { verificationState: 'InUse' }
     else return { verificationState: 'Error' }
   }
 }
@@ -34,11 +34,17 @@ const getConfirmVerifyCode = async (
   params: AuthVerifyCode
 ): Promise<VerificationResult> => {
   try {
-    const response = await axios.post('/api/confirm/code', params)
-    if (response.data.code === '1000')
+    const response: {
+      data: {
+        code: number
+      }
+    } = await axios.post('/api/email/verification/confirm', params)
+    if (response.data.code === 1000)
       return {
         verificationState: 'Authentication',
       }
+    else if (response.data.code === 3001)
+      return { verificationState: 'Mismatched' }
     else return { verificationState: 'Error' }
   } catch (e: any) {
     if (e?.response?.code === '2000') return { verificationState: 'Mismatched' }
