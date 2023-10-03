@@ -9,5 +9,4 @@ export interface AuthVerifyCode extends AuthUserVerifyCodeByEmailInput {
 export interface SignUpUserInput {
   userId: string | null
   password: string | null
-  usePillList?: string[]
 }
