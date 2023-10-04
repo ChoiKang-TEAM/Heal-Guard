@@ -4,7 +4,6 @@ import com.choikang.healguard.user.entity.User;
 import com.choikang.healguard.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
 

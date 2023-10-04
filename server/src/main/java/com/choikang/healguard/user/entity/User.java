@@ -3,7 +3,6 @@ package com.choikang.healguard.user.entity;
 import com.choikang.healguard.common.domain.BaseEntity;
 import com.choikang.healguard.user.dto.CreateUserReqDto;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
