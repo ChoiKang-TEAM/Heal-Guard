@@ -11,14 +11,15 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @unique @default(autoincrement())
-  userId    String   @unique @map("user_id")
-  password  String
-  name      String?
-  userSeq   String   @unique @map("user_seq")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  age       Int
+  id           Int           @id @unique @default(autoincrement())
+  userId       String        @unique @map("user_id")
+  password     String
+  name         String?
+  userSeq      String        @unique @map("user_seq")
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
+  age          Int
+  refreshToken RefreshToken?
 
   @@map("PG_MB_USER")
 }
@@ -32,4 +33,14 @@ model EmailVerification {
   updatedAt  DateTime @updatedAt @map("updated_at")
 
   @@map("PG_MB_EMAIL_VERIFICATION")
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    Int      @unique @map("user_id")
+  isRevoked Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  user      User     @relation(fields: [userId], references: [id])
 }
