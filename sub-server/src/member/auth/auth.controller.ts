@@ -6,6 +6,7 @@ import { InvalidUserException } from 'src/shared/exceptions/invalid-user.excepti
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
   @Post('login')
   async login(@Body() loginMemberUserDto: LoginMemberUserDto) {
     const user = await this.authService.validateUser(loginMemberUserDto)
