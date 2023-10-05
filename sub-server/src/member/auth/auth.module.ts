@@ -5,9 +5,10 @@ import { EmailVerificationModule } from './email-verification/email-verification
 import { JwtModule } from '@nestjs/jwt'
 import { PrismaService } from 'src/shared/prisma/prisma.service'
 import { JwtStrategy } from './jwt.strategy'
+import { UserService } from '../user/user.service'
 
 @Module({
-  providers: [AuthService, JwtStrategy, PrismaService],
+  providers: [AuthService, JwtStrategy, PrismaService, UserService],
   controllers: [AuthController],
   imports: [
     JwtModule.register({
@@ -16,6 +17,6 @@ import { JwtStrategy } from './jwt.strategy'
     }),
     EmailVerificationModule
   ],
-  exports: [AuthService]
+  exports: [AuthService, JwtModule, JwtStrategy]
 })
 export class AuthModule {}
