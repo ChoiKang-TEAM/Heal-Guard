@@ -10,18 +10,45 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ENUM 정의
+enum UserRole {
+  ROLE_ADMIN
+  ROLE_USER
+  ROLE_GUEST
+}
+
+// MODEL 정의
 model User {
-  id           Int           @id @unique @default(autoincrement())
-  userId       String        @unique @map("user_id")
+  id           Int               @id @unique @default(autoincrement())
+  userId       String            @unique @map("user_id")
   password     String
   name         String?
-  userSeq      String        @unique @map("user_seq")
-  createdAt    DateTime      @default(now()) @map("created_at")
-  updatedAt    DateTime      @updatedAt @map("updated_at")
+  userSeq      String            @unique @map("user_seq")
+  createdAt    DateTime          @default(now()) @map("created_at")
+  updatedAt    DateTime          @updatedAt @map("updated_at")
   age          Int
+  roles        UserRoleMapping[]
   refreshToken RefreshToken?
 
-  @@map("PG_MB_USER")
+  @@map("HG_MB_USER")
+}
+
+model Role {
+  id    Int               @id @unique @default(autoincrement())
+  name  UserRole          @unique
+  users UserRoleMapping[]
+
+  @@map("HG_MB_ROLE")
+}
+
+model UserRoleMapping {
+  id     Int  @id @unique @default(autoincrement())
+  userId Int
+  roleId Int
+  user   User @relation(fields: [userId], references: [id])
+  role   Role @relation(fields: [roleId], references: [id])
+
+  @@map("HG_MB_USER_ROLE_MAPPING")
 }
 
 model EmailVerification {
@@ -32,7 +59,7 @@ model EmailVerification {
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
 
-  @@map("PG_MB_EMAIL_VERIFICATION")
+  @@map("HG_MB_EMAIL_VERIFICATION")
 }
 
 model RefreshToken {
@@ -43,4 +70,6 @@ model RefreshToken {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   user      User     @relation(fields: [userId], references: [id])
+
+  @@map("HG_MB_REFRESH_TOKEN")
 }

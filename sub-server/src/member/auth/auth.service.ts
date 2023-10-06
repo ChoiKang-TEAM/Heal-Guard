@@ -1,10 +1,11 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
-import { User } from '@prisma/client'
+import { Role, User, UserRole } from '@prisma/client'
 import * as bcrypt from 'bcrypt'
 import { LoginMemberUserDto } from '../user/dto/user.input'
 import { UserService } from '../user/user.service'
 import { PrismaService } from 'src/shared/prisma/prisma.service'
+import { ExtendsUser } from '../user/entity/user.entity'
 
 @Injectable()
 export class AuthService {
@@ -15,7 +16,7 @@ export class AuthService {
     return this.jwtService.sign(payload)
   }
 
-  async validateUser(loginMemberUserDto: LoginMemberUserDto): Promise<User> {
+  async validateUser(loginMemberUserDto: LoginMemberUserDto) {
     const userIdDto: Omit<LoginMemberUserDto, 'password'> = {
       userId: loginMemberUserDto.userId
     }
@@ -28,6 +29,27 @@ export class AuthService {
       throw new UnauthorizedException('Invalid password')
     }
     return user
+  }
+  async login(
+    user: User & {
+      roles: ({
+        role: {
+          id: number
+          name: UserRole
+        }
+      } & {
+        id: number
+        userId: number
+        roleId: number
+      })[]
+    }
+  ) {
+    const payload = { userSeq: user.userSeq, roles: user.roles.map((v) => v.role.name) }
+    const refreshToken = await this.createRefreshToken(user.id)
+    return {
+      access_token: this.jwtService.sign(payload),
+      refresh_token: refreshToken
+    }
   }
 
   private async createRefreshToken(userId: number): Promise<string> {
