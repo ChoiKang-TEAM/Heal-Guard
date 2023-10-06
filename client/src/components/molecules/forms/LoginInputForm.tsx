@@ -15,12 +15,13 @@ import {
   Typography,
 } from '@mui/material'
 import ValidationInput from 'src/components/atoms/inputs/ValidationInput'
+import getUerApi from 'src/apis/getUser'
 
 const LoginInputForm = () => {
   const schema = yup.object().shape({
     userId: yup
       .string()
-      .email('이메일 형식으로 입력해주세요.')
+      //.email('이메일 형식으로 입력해주세요.')
       .required('아이디를 입력해주세요.'),
     password: yup.string().required('비밀번호를 입력해주세요.'),
   })
@@ -41,8 +42,12 @@ const LoginInputForm = () => {
   })
 
   const onLogin = () => {
-    console.log(getValues())
-    console.log(errors)
+    const dto = {
+      userId: getValues().userId,
+      password: getValues().password,
+    }
+    const result = getUerApi.login(dto)
+    console.log(result)
   }
   return (
     <Paper elevation={3} style={{ padding: '20px', marginTop: '100px' }}>
