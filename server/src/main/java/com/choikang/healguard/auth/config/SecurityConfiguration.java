@@ -1,6 +1,8 @@
 package com.choikang.healguard.auth.config;
 
 import com.choikang.healguard.auth.filter.JwtVerificationFilter;
+import com.choikang.healguard.auth.handler.UserAccessDeniedHandler;
+import com.choikang.healguard.auth.handler.UserAuthenticationEntryPoint;
 import com.choikang.healguard.auth.jwt.JwtTokenizer;
 import com.choikang.healguard.auth.utils.CustomAuthorityUtils;
 import org.springframework.context.annotation.Bean;
@@ -40,6 +42,8 @@ public class SecurityConfiguration {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.csrf().disable().formLogin().disable().httpBasic().disable().apply(new CustomFilterConfigurer());
+
+        http.exceptionHandling().authenticationEntryPoint(new UserAuthenticationEntryPoint()).accessDeniedHandler(new UserAccessDeniedHandler());
 
         return http.build();
     }
