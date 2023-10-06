@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { User } from '@prisma/client'
+import { Role, User, UserRole } from '@prisma/client'
 import { CrudService } from 'src/shared/interfaces/factory.interface'
 import { PrismaService } from 'src/shared/prisma/prisma.service'
 import { JoinMemberUser } from './dto/user.input'
@@ -22,7 +22,18 @@ export class UserService implements CrudService<User> {
           name: dto.name,
           age: dto.age,
           password: hasshedPassword,
-          userSeq: userSeq
+          userSeq: userSeq,
+          roles: {
+            create: [
+              {
+                role: {
+                  connect: {
+                    name: UserRole.ROLE_USER
+                  }
+                }
+              }
+            ]
+          }
         }
       })
       return true
@@ -36,11 +47,18 @@ export class UserService implements CrudService<User> {
   update(dto: Partial<{ id: number; userId: string; password: string; name: string; userSeq: string; createdAt: Date; updatedAt: Date; age: number }>): Promise<boolean> {
     throw new Error('Method not implemented.')
   }
-  async findUnique(dto: { userId: string }): Promise<User> {
+  async findUnique(dto: { userId: string }) {
     try {
       const user = await this.prisma.user.findUnique({
         where: {
           userId: dto.userId
+        },
+        include: {
+          roles: {
+            include: {
+              role: true
+            }
+          }
         }
       })
       return user
