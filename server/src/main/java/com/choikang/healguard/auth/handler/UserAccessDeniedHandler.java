@@ -7,15 +7,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 public class UserAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        PrintWriter writer = response.getWriter();
-        writer.write("{\"code\": 9000}");
-        writer.flush();
+
+        String jsonResponse = "{\"code\": 9001}";
+
+        byte[] responseBytes = jsonResponse.getBytes(StandardCharsets.UTF_8);
+        response.getOutputStream().write(responseBytes);
     }
 }

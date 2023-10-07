@@ -4,6 +4,7 @@ import com.choikang.healguard.auth.jwt.JwtTokenizer;
 import com.choikang.healguard.auth.utils.CustomAuthorityUtils;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public class JwtVerificationFilter extends OncePerRequestFilter {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
@@ -37,6 +39,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
         } catch (ExpiredJwtException ee) {
             request.setAttribute("exception", ee);
         } catch (Exception e) {
+            log.error("jwt error, ", e);
             request.setAttribute("exception", e);
         }
 
@@ -51,9 +54,9 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     }
 
     private void setAuthenticationToContext(Map<String, Object> claims) {
-        String username = (String) claims.get("username");
+        String userSeq = (String) claims.get("userSeq");
         List<GrantedAuthority> authorities = authorityUtils.createAuthorities((List)claims.get("roles"));
-        Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userSeq, null, authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }
