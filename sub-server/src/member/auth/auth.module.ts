@@ -13,7 +13,7 @@ import { EmailVerificationService } from './email-verification/email-verificatio
   imports: [
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '15m' }
+      signOptions: { expiresIn: '60m' }
     }),
     UserModule
   ],
