@@ -28,7 +28,7 @@ export class UserService implements CrudService<User> {
               {
                 role: {
                   connect: {
-                    name: UserRole.ROLE_USER
+                    name: UserRole.USER
                   }
                 }
               }

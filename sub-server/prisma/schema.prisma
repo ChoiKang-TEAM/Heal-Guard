@@ -12,9 +12,9 @@ datasource db {
 
 // ENUM 정의
 enum UserRole {
-  ROLE_ADMIN
-  ROLE_USER
-  ROLE_GUEST
+  ADMIN
+  USER
+  GUEST
 }
 
 // MODEL 정의
