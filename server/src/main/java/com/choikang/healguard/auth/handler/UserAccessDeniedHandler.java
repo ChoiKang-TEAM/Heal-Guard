@@ -1,0 +1,23 @@
+package com.choikang.healguard.auth.handler;
+
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.access.AccessDeniedHandler;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
+public class UserAccessDeniedHandler implements AccessDeniedHandler {
+    @Override
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
+        response.setContentType("application/json;charset=UTF-8");
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
+        String jsonResponse = "{\"code\": 9001}";
+
+        byte[] responseBytes = jsonResponse.getBytes(StandardCharsets.UTF_8);
+        response.getOutputStream().write(responseBytes);
+    }
+}

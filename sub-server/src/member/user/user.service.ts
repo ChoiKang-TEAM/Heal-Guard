@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { User } from '@prisma/client'
+import { Role, User, UserRole } from '@prisma/client'
 import { CrudService } from 'src/shared/interfaces/factory.interface'
 import { PrismaService } from 'src/shared/prisma/prisma.service'
 import { JoinMemberUser } from './dto/user.input'
@@ -22,11 +22,27 @@ export class UserService implements CrudService<User> {
           name: dto.name,
           age: dto.age,
           password: hasshedPassword,
-          userSeq: userSeq
+          userSeq: userSeq,
+          roles: {
+            create: [
+              {
+                role: {
+                  connect: {
+                    name: UserRole.USER
+                  }
+                }
+              }
+            ]
+          }
         }
       })
+      // 타 db에 데이터 저장
+
       return true
     } catch (e) {
+      if (e.response.data.code === 2000) {
+        // 롤백
+      }
       return false
     }
   }
@@ -36,16 +52,26 @@ export class UserService implements CrudService<User> {
   update(dto: Partial<{ id: number; userId: string; password: string; name: string; userSeq: string; createdAt: Date; updatedAt: Date; age: number }>): Promise<boolean> {
     throw new Error('Method not implemented.')
   }
-  async findUnique(dto: { userId: string }): Promise<User> {
+  async findUnique(dto: { userId?: string; id?: number }) {
+    const whereCondition = dto.userId ? { userId: dto.userId } : { id: dto.id }
+    if (Object.keys(whereCondition).length === 0) {
+      throw new Error('No valid conditions provided for user lookup.')
+    }
     try {
       const user = await this.prisma.user.findUnique({
-        where: {
-          userId: dto.userId
+        where: whereCondition,
+        include: {
+          roles: {
+            include: {
+              role: true
+            }
+          }
         }
       })
       return user
     } catch (e) {}
   }
+
   findAll(): Promise<{ id: number; userId: string; password: string; name: string; userSeq: string; createdAt: Date; updatedAt: Date; age: number }[]> {
     throw new Error('Method not implemented.')
   }
