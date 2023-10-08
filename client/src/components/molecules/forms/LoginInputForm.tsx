@@ -1,19 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import * as yup from 'yup'
-
-import { User } from 'src/types/interface/user/userInterface'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  Input,
-  Paper,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { Button, Paper, Typography } from '@mui/material'
 import ValidationInput from 'src/components/atoms/inputs/ValidationInput'
 import getUerApi from 'src/apis/getUser'
 
