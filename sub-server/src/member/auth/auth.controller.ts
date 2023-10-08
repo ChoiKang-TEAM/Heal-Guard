@@ -28,5 +28,11 @@ export class AuthController {
     }
 
     const user = await this.userService.findUnique({ id: storedTokenData.userId })
+    const newAccessToken = await this.authService.createToken(user)
+    await this.authService.revokeRefreshToken(token)
+
+    return {
+      access_token: newAccessToken
+    }
   }
 }
