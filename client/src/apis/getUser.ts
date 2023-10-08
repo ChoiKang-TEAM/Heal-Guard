@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { User } from 'src/types/interface/user/userInterface'
 
 const usedEmail: string[] = ['motojate@naver.com', 'maxi@soulware.kr']
@@ -36,9 +37,19 @@ const isUsedUserId = async (userId: string): Promise<boolean> => {
   }
 }
 
-const getUerApi = {
-  getUser,
-  isUsedUserId,
+const login = async (dto: { userId: string; password: string }) => {
+  try {
+    const response = await axios.post('api/auth/login', dto)
+    console.log(response)
+  } catch (e) {
+    console.error(e)
+  }
 }
 
-export default getUerApi
+const getUserApi = {
+  getUser,
+  isUsedUserId,
+  login,
+}
+
+export default getUserApi
