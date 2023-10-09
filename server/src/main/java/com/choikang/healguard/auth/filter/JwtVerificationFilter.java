@@ -47,7 +47,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     }
 
     private Map<String, Object> verifyJws(HttpServletRequest request) {
-        String jws = request.getHeader("Authorization").replace("Bearer ", "");
+        String jws = request.getHeader("Authorization");
         Map<String, Object> claims = jwtTokenizer.getClaims(jws);
 
         return claims;

@@ -1,14 +1,15 @@
 package com.choikang.healguard.exercise.controller;
 
 import com.choikang.healguard.exercise.dto.CreateExerciseReqDto;
-import com.choikang.healguard.exercise.dto.CreateExerciseRespDto;
+import com.choikang.healguard.exercise.dto.ExerciseListRespDto;
+import com.choikang.healguard.exercise.dto.ExerciseRespDto;
 import com.choikang.healguard.exercise.entity.Exercise;
 import com.choikang.healguard.exercise.service.ExerciseService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -16,10 +17,24 @@ import org.springframework.web.bind.annotation.RestController;
 public class ExerciseController {
     private final ExerciseService exerciseService;
 
-    @PostMapping("/exercise/create")
-    public CreateExerciseRespDto postExercise(@RequestBody CreateExerciseReqDto createExerciseReqDto){
+    @PostMapping("/exercises/create")
+    public ExerciseRespDto postExercise(@RequestBody CreateExerciseReqDto createExerciseReqDto){
         exerciseService.createExercise(new Exercise(createExerciseReqDto));
 
-        return new CreateExerciseRespDto();
+        return new ExerciseRespDto();
+    }
+
+    @GetMapping("/exercises")
+    public ExerciseListRespDto getExercises(@RequestParam(defaultValue = "1") int page,
+                                           @RequestParam(defaultValue = "10") int size){
+        Page<Exercise> exercisePage = exerciseService.findExercises(page, size);
+        List<Exercise> exercises = exercisePage.getContent();
+
+        return new ExerciseListRespDto(exercises,exercisePage);
+    }
+
+    @GetMapping("/exercises/{exercisesId}")
+    public ExerciseRespDto getExercise(@PathVariable long exercisesId) {
+        return new ExerciseRespDto(exerciseService.findExercise(exercisesId));
     }
 }
