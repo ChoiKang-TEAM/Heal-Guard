@@ -17,6 +17,13 @@ enum UserRole {
   GUEST
 }
 
+enum Status {
+  Y
+  W
+  N
+  D
+}
+
 // MODEL 정의
 model User {
   id           Int               @id @unique @default(autoincrement())
