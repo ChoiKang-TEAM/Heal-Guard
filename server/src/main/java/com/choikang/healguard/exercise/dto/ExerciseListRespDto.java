@@ -15,11 +15,20 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ExerciseListRespDto {
     int code = ResultCode.SUCCESS.value();
-    private List<Exercise> result;
-    private PageInfo pageInfo;
+    private DataResult result;
 
-    public ExerciseListRespDto(List<Exercise> result, Page page) {
-        this.result = result;
-        this.pageInfo = new PageInfo(page.getNumber() + 1, page.getSize(), page.getTotalElements(), page.getTotalPages());
+    @Getter
+    public static class DataResult {
+        private final List<Exercise> exercises;
+        private final PageInfo pageInfo;
+
+        public DataResult(List<Exercise> exercises, Page page) {
+            this.exercises = exercises;
+            this.pageInfo = new PageInfo(page.getNumber() + 1, page.getSize(), page.getTotalElements(), page.getTotalPages());
+        }
+    }
+
+    public ExerciseListRespDto(List<Exercise> exercises, Page<Exercise> page) {
+        this.result = new DataResult(exercises, page);
     }
 }
