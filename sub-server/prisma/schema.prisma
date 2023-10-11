@@ -82,3 +82,7 @@ model RefreshToken {
 
   @@map("HG_MB_REFRESH_TOKEN")
 }
+
+model EmailService {
+  id Int @id @default(autoincrement())
+}
