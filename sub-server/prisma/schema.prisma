@@ -84,5 +84,15 @@ model RefreshToken {
 }
 
 model EmailService {
-  id Int @id @default(autoincrement())
+  id     Int    @id @default(autoincrement())
+  status Status
+
+  @@map("HG_MB_EMAIL_SERVICE")
+}
+
+model IpBlackList {
+  id Int    @id @default(autoincrement())
+  ip String
+
+  @@map("HG_MB_IP_BLACK_LIST")
 }
