@@ -24,6 +24,12 @@ enum Status {
   D
 }
 
+enum MsgType {
+  EMAIL
+  SMS
+  PUSH
+}
+
 // MODEL 정의
 model User {
   id           Int               @id @unique @default(autoincrement())
@@ -83,11 +89,18 @@ model RefreshToken {
   @@map("HG_MB_REFRESH_TOKEN")
 }
 
-model EmailService {
-  id     Int    @id @default(autoincrement())
-  status Status
+model Message {
+  id        Int      @id @default(autoincrement())
+  msgType   MsgType  @map("msg_type")
+  status    Status
+  receiver  String
+  title     String?
+  content   String
+  sender    String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@map("HG_MB_EMAIL_SERVICE")
+  @@map("HG_MB_MESSAGE")
 }
 
 model IpBlackList {
