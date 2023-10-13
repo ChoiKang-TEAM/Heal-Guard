@@ -6,9 +6,10 @@ import { AuthModule } from './member/auth/auth.module'
 import { ScheduleModule } from '@nestjs/schedule'
 import { TasksService } from './shared/services/tasks.service'
 import { UserModule } from './member/user/user.module'
+import { MessageModule } from './member/message/message.module';
 
 @Module({
-  imports: [PrismaModule, AuthModule, ScheduleModule.forRoot(), UserModule],
+  imports: [PrismaModule, AuthModule, ScheduleModule.forRoot(), UserModule, MessageModule],
   controllers: [AppController],
   providers: [AppService, TasksService]
 })
