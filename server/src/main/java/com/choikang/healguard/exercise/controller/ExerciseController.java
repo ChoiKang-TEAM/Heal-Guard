@@ -37,4 +37,10 @@ public class ExerciseController {
     public ExerciseRespDto getExercise(@PathVariable long exercisesId) {
         return new ExerciseRespDto(exerciseService.findExercise(exercisesId));
     }
+
+    @DeleteMapping("/exercises/{exerciseId}")
+    public ExerciseRespDto deleteExercise(@PathVariable long exerciseId) {
+        exerciseService.deleteExercise(exerciseId);
+        return new ExerciseRespDto();
+    }
 }
