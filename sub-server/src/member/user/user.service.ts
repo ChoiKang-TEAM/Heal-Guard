@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { Role, User, UserRole } from '@prisma/client'
+import { $Enums, Role, User, UserRole } from '@prisma/client'
 import { CrudService } from 'src/shared/interfaces/factory.interface'
 import { PrismaService } from 'src/shared/prisma/prisma.service'
 import { JoinMemberUser } from './dto/user.input'
@@ -9,6 +9,14 @@ import * as bcrypt from 'bcrypt'
 @Injectable()
 export class UserService implements CrudService<User> {
   constructor(private readonly prisma: PrismaService) {}
+  findAll(): Promise<{ id: number; userId: string; password: string; name: string; userSeq: string; status: $Enums.Status; createdAt: Date; updatedAt: Date; age: number }[]> {
+    throw new Error('Method not implemented.')
+  }
+  findByFilter(
+    dto: Partial<{ id: number; userId: string; password: string; name: string; userSeq: string; status: $Enums.Status; createdAt: Date; updatedAt: Date; age: number }>
+  ): Promise<{ id: number; userId: string; password: string; name: string; userSeq: string; status: $Enums.Status; createdAt: Date; updatedAt: Date; age: number }[]> {
+    throw new Error('Method not implemented.')
+  }
 
   async create(dto: JoinMemberUser): Promise<boolean> {
     try {
@@ -70,14 +78,5 @@ export class UserService implements CrudService<User> {
       })
       return user
     } catch (e) {}
-  }
-
-  findAll(): Promise<{ id: number; userId: string; password: string; name: string; userSeq: string; createdAt: Date; updatedAt: Date; age: number }[]> {
-    throw new Error('Method not implemented.')
-  }
-  findByFilter(
-    dto: Partial<{ id: number; userId: string; password: string; name: string; userSeq: string; createdAt: Date; updatedAt: Date; age: number }>
-  ): Promise<{ id: number; userId: string; password: string; name: string; userSeq: string; createdAt: Date; updatedAt: Date; age: number }[]> {
-    throw new Error('Method not implemented.')
   }
 }
