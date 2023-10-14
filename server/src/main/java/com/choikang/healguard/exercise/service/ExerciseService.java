@@ -27,4 +27,8 @@ public class ExerciseService {
     public Exercise findExercise(long exerciseId) {
         return exerciseRepository.findById(exerciseId).orElseThrow();
     }
+
+    public void deleteExercise(long exerciseId) {
+        exerciseRepository.deleteById(exerciseId);
+    }
 }
