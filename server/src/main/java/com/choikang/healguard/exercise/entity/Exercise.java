@@ -2,6 +2,7 @@ package com.choikang.healguard.exercise.entity;
 
 import com.choikang.healguard.common.domain.BaseEntity;
 import com.choikang.healguard.exercise.dto.CreateExerciseReqDto;
+import com.choikang.healguard.exercise.dto.UpdateExerciseReqDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -43,5 +44,12 @@ public class Exercise extends BaseEntity {
         this.name = createExerciseReqDto.getName();
         this.category = createExerciseReqDto.getCategory();
         this.description = createExerciseReqDto.getDescription();
+    }
+
+    public Exercise(UpdateExerciseReqDto updateExerciseReqDto) {
+        this.id = updateExerciseReqDto.getId();
+        this.name = updateExerciseReqDto.getName();
+        this.category = updateExerciseReqDto.getCategory();
+        this.description = updateExerciseReqDto.getDescription();
     }
 }

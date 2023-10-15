@@ -3,6 +3,7 @@ package com.choikang.healguard.exercise.controller;
 import com.choikang.healguard.exercise.dto.CreateExerciseReqDto;
 import com.choikang.healguard.exercise.dto.ExerciseListRespDto;
 import com.choikang.healguard.exercise.dto.ExerciseRespDto;
+import com.choikang.healguard.exercise.dto.UpdateExerciseReqDto;
 import com.choikang.healguard.exercise.entity.Exercise;
 import com.choikang.healguard.exercise.service.ExerciseService;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +43,14 @@ public class ExerciseController {
     public ExerciseRespDto deleteExercise(@PathVariable long exerciseId) {
         exerciseService.deleteExercise(exerciseId);
         return new ExerciseRespDto();
+    }
+
+    @PatchMapping("/exercises/{exerciseId}")
+    public ExerciseRespDto patchExercise(@PathVariable long exerciseId,
+                                         @RequestBody UpdateExerciseReqDto updateExerciseReqDto) {
+        updateExerciseReqDto.setId(exerciseId);
+        Exercise exercise = exerciseService.updateExercise(new Exercise(updateExerciseReqDto));
+
+        return new ExerciseRespDto(exercise);
     }
 }
