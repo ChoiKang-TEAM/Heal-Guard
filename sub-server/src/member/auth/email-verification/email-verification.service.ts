@@ -5,11 +5,12 @@ import { ApiResponse } from 'src/shared/dtos/api-response.dto'
 import { generateRandomSixDigitString } from 'src/shared/utils/randomUtil'
 import { getValidTime } from 'src/shared/utils/timeUtil'
 import * as nodeMailer from 'nodemailer'
-import { EmailVerification } from '@prisma/client'
+import { EmailVerification, Message } from '@prisma/client'
+import { EventsService } from 'src/shared/services/events.service'
 
 @Injectable()
 export class EmailVerificationService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService, private readonly eventService: EventsService) {}
 
   private async upsertEmailVerification(userId: string, randomNumber: string): Promise<EmailVerification> {
     return this.prisma.emailVerification.upsert({
@@ -38,6 +39,17 @@ export class EmailVerificationService {
   }
 
   async sendVerificationEmail(dto: SendMailDto): Promise<ApiResponse<{ validTime: Date }>> {
+    const dto2: Omit<Message, 'id'> = {
+      msgType: 'EMAIL',
+      status: 'Y',
+      receiver: '',
+      title: '',
+      content: '',
+      sender: '',
+      createdAt: undefined,
+      updatedAt: undefined
+    }
+
     const { userId } = dto
     const randomNumber = generateRandomSixDigitString()
     const inUsedUserId = await this.checkUserExistence(userId)

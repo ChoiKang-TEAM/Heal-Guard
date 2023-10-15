@@ -1,6 +1,7 @@
-import { Role, User } from '@prisma/client'
+import { $Enums, Role, User } from '@prisma/client'
 
 export class ExtendsUser implements User {
+  status: $Enums.Status
   id: number
   userId: string
   password: string
