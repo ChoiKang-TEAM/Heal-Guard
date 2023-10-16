@@ -4,13 +4,12 @@ import { ConfirmVerifyCodeDto, SendMailDto } from './dto/email-verification.dto'
 import { ApiResponse } from 'src/shared/dtos/api-response.dto'
 import { generateRandomSixDigitString } from 'src/shared/utils/randomUtil'
 import { getValidTime } from 'src/shared/utils/timeUtil'
-import * as nodeMailer from 'nodemailer'
-import { EmailVerification, Message } from '@prisma/client'
-import { EventsService } from 'src/shared/services/events.service'
+import { EmailVerification } from '@prisma/client'
+import { MessageService } from 'src/member/message/message.service'
 
 @Injectable()
 export class EmailVerificationService {
-  constructor(private readonly prisma: PrismaService, private readonly eventService: EventsService) {}
+  constructor(private readonly prisma: PrismaService, private readonly messageService: MessageService) {}
 
   private async upsertEmailVerification(userId: string, randomNumber: string): Promise<EmailVerification> {
     return this.prisma.emailVerification.upsert({
@@ -39,17 +38,6 @@ export class EmailVerificationService {
   }
 
   async sendVerificationEmail(dto: SendMailDto): Promise<ApiResponse<{ validTime: Date }>> {
-    const dto2: Omit<Message, 'id'> = {
-      msgType: 'EMAIL',
-      status: 'Y',
-      receiver: '',
-      title: '',
-      content: '',
-      sender: '',
-      createdAt: undefined,
-      updatedAt: undefined
-    }
-
     const { userId } = dto
     const randomNumber = generateRandomSixDigitString()
     const inUsedUserId = await this.checkUserExistence(userId)
@@ -61,20 +49,7 @@ export class EmailVerificationService {
     const emailVerification = await this.upsertEmailVerification(userId, randomNumber)
 
     try {
-      const transport = nodeMailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: process.env.AUTH_MAIL_USERID,
-          pass: process.env.AUTH_MAIL_PASSWORD
-        }
-      })
-      const mailOptions = {
-        to: userId,
-        subject: '인증 번호 발급',
-        html: `<h3>${randomNumber}</h3>`
-      }
-      // await transport.sendMail(mailOptions) TODO: 실제 메일은 안 가지게 설정
-
+      this.messageService.sendMail(dto.userId, 'title', randomNumber)
       return {
         code: 1000,
         result: {
