@@ -5,7 +5,7 @@ import com.choikang.healguard.exercise.dto.ExerciseListRespDto;
 import com.choikang.healguard.exercise.dto.ExerciseRespDto;
 import com.choikang.healguard.exercise.dto.UpdateExerciseReqDto;
 import com.choikang.healguard.exercise.entity.Exercise;
-import com.choikang.healguard.exercise.service.ExerciseService;
+import com.choikang.healguard.exercise.service.UserExerciseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 @RequiredArgsConstructor
-public class ExerciseController {
-    private final ExerciseService exerciseService;
+public class UserExerciseController {
+    private final UserExerciseService exerciseService;
 
     @PostMapping("/exercises/create")
     public ExerciseRespDto postExercise(@RequestBody CreateExerciseReqDto createExerciseReqDto){
@@ -37,20 +37,5 @@ public class ExerciseController {
     @GetMapping("/exercises/{exercisesId}")
     public ExerciseRespDto getExercise(@PathVariable long exercisesId) {
         return new ExerciseRespDto(exerciseService.findExercise(exercisesId));
-    }
-
-    @DeleteMapping("/exercises/{exerciseId}")
-    public ExerciseRespDto deleteExercise(@PathVariable long exerciseId) {
-        exerciseService.deleteExercise(exerciseId);
-        return new ExerciseRespDto();
-    }
-
-    @PatchMapping("/exercises/{exerciseId}")
-    public ExerciseRespDto patchExercise(@PathVariable long exerciseId,
-                                         @RequestBody UpdateExerciseReqDto updateExerciseReqDto) {
-        updateExerciseReqDto.setId(exerciseId);
-        Exercise exercise = exerciseService.updateExercise(new Exercise(updateExerciseReqDto));
-
-        return new ExerciseRespDto(exercise);
     }
 }
