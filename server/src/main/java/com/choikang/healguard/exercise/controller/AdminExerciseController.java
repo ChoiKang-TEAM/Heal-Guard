@@ -27,4 +27,11 @@ public class AdminExerciseController {
 
         return new ExerciseRespDto(exercise);
     }
+
+    @PatchMapping("/exercises/{exerciseId}/status")
+    public ExerciseRespDto changeExerciseStatus(@PathVariable long exerciseId) {
+        exerciseService.updateExerciseStatus(exerciseId);
+
+        return new ExerciseRespDto();
+    }
 }
