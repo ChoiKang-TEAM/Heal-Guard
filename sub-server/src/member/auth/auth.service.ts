@@ -1,18 +1,17 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
-import { Role, User, UserRole } from '@prisma/client'
+import { User, UserRole } from '@prisma/client'
 import * as bcrypt from 'bcrypt'
 import { LoginMemberUserDto } from '../user/dto/user.input'
 import { UserService } from '../user/user.service'
 import { PrismaService } from 'src/shared/prisma/prisma.service'
-import { ExtendsUser } from '../user/entity/user.entity'
 
 @Injectable()
 export class AuthService {
   constructor(private readonly jwtService: JwtService, private readonly prisma: PrismaService, private readonly userService: UserService) {}
 
   async createToken(user: User): Promise<string> {
-    const payload = { id: user.id, userId: user.userId, userSeq: user.userSeq, age: user.age }
+    const payload = { userSeq: user.userSeq }
     return this.jwtService.sign(payload)
   }
 

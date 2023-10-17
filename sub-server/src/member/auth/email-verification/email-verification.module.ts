@@ -1,12 +1,11 @@
 import { Module } from '@nestjs/common'
 import { EmailVerificationService } from './email-verification.service'
-import { PrismaModule } from 'src/shared/prisma/prisma.module'
 import { EmailVerificationController } from './email-verification.controller'
-import { EventsService } from 'src/shared/services/events.service'
+import { PrismaService } from 'src/shared/prisma/prisma.service'
+import { MessageService } from 'src/member/message/message.service'
 
 @Module({
-  providers: [EmailVerificationService, EventsService],
-  controllers: [EmailVerificationController],
-  imports: [PrismaModule]
+  providers: [EmailVerificationService, PrismaService, MessageService],
+  controllers: [EmailVerificationController]
 })
 export class EmailVerificationModule {}

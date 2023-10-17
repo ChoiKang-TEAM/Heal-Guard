@@ -27,8 +27,6 @@ export class UserService implements CrudService<User> {
       await this.prisma.user.create({
         data: {
           userId: dto.userId,
-          name: dto.name,
-          age: dto.age,
           password: hasshedPassword,
           userSeq: userSeq,
           roles: {

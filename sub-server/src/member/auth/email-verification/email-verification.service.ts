@@ -2,8 +2,8 @@ import { BadRequestException, Injectable, InternalServerErrorException } from '@
 import { PrismaService } from 'src/shared/prisma/prisma.service'
 import { ConfirmVerifyCodeDto, SendMailDto } from './dto/email-verification.dto'
 import { ApiResponse } from 'src/shared/dtos/api-response.dto'
-import { generateRandomSixDigitString } from 'src/shared/utils/randomUtil'
-import { getValidTime } from 'src/shared/utils/timeUtil'
+import { generateRandomSixDigitString } from 'src/shared/utils/random.util'
+import { getValidTime } from 'src/shared/utils/time.util'
 import { EmailVerification } from '@prisma/client'
 import { MessageService } from 'src/member/message/message.service'
 
