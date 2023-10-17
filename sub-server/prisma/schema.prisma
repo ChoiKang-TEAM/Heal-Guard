@@ -35,12 +35,10 @@ model User {
   id           Int               @id @unique @default(autoincrement())
   userId       String            @unique @map("user_id")
   password     String
-  name         String?
   userSeq      String            @unique @map("user_seq")
   status       Status            @default(Y)
   createdAt    DateTime          @default(now()) @map("created_at")
   updatedAt    DateTime          @updatedAt @map("updated_at")
-  age          Int
   roles        UserRoleMapping[]
   refreshToken RefreshToken?
 
