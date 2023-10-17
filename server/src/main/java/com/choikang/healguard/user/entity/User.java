@@ -16,6 +16,12 @@ public class User extends BaseEntity {
     @Id
     private String user_seq;
 
+    private String name;
+
+    private String age;
+
+    private String nickname;
+
     public User(CreateUserReqDto request) {
         this.user_seq = request.getUser_seq();
     }
