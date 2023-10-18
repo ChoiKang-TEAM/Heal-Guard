@@ -1,11 +1,12 @@
 import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common'
 import { PrismaService } from 'src/shared/prisma/prisma.service'
-import { ConfirmVerifyCodeDto, SendMailDto } from './dto/email-verification.dto'
+import { ConfirmVerifyCodeDto } from './dto/email-verification.dto'
 import { ApiResponse } from 'src/shared/dtos/api-response.dto'
 import { generateRandomSixDigitString } from 'src/shared/utils/random.util'
 import { getValidTime } from 'src/shared/utils/time.util'
-import { EmailVerification } from '@prisma/client'
+import { EmailVerification, User } from '@prisma/client'
 import { MessageService } from 'src/member/message/message.service'
+import { SendMailDto } from 'src/member/message/dto/message.dto'
 
 @Injectable()
 export class EmailVerificationService {
@@ -37,7 +38,7 @@ export class EmailVerificationService {
     return existingUser ? true : false
   }
 
-  async sendVerificationEmail(dto: SendMailDto): Promise<ApiResponse<{ validTime: Date }>> {
+  async sendVerificationEmail(dto: Pick<User, 'userId'>): Promise<ApiResponse<{ validTime: Date }>> {
     const { userId } = dto
     const randomNumber = generateRandomSixDigitString()
     const inUsedUserId = await this.checkUserExistence(userId)
@@ -49,7 +50,12 @@ export class EmailVerificationService {
     const emailVerification = await this.upsertEmailVerification(userId, randomNumber)
 
     try {
-      this.messageService.sendMail(dto.userId, 'title', randomNumber)
+      const dto: SendMailDto = {
+        to: userId,
+        title: '',
+        content: ''
+      }
+      this.messageService.sendMail(dto)
       return {
         code: 1000,
         result: {
