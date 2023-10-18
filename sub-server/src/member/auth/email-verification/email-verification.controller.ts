@@ -1,7 +1,8 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common'
-import { ConfirmVerifyCodeDto, SendMailDto } from './dto/email-verification.dto'
+import { ConfirmVerifyCodeDto } from './dto/email-verification.dto'
 import { EmailVerificationService } from './email-verification.service'
 import { ApiResponse } from 'src/shared/dtos/api-response.dto'
+import { User } from '@prisma/client'
 
 @Controller('email/verification')
 export class EmailVerificationController {
@@ -9,8 +10,8 @@ export class EmailVerificationController {
 
   @Post('/send')
   @HttpCode(200)
-  async sendMail(@Body() sendMailDto: SendMailDto): Promise<ApiResponse<{ validTime: Date }>> {
-    return this.emailVerificationService.sendVerificationEmail(sendMailDto)
+  async sendMail(@Body() userId: Pick<User, 'userId'>): Promise<ApiResponse<{ validTime: Date }>> {
+    return this.emailVerificationService.sendVerificationEmail(userId)
   }
 
   @Post('/confirm')

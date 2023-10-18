@@ -1,7 +1,4 @@
-export class SendMailDto {
-  userId: string
-}
-
-export class ConfirmVerifyCodeDto extends SendMailDto {
+export class ConfirmVerifyCodeDto {
   verifyCode: string
+  userId: string
 }

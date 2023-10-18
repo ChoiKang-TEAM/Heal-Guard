@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common'
 import * as nodeMailer from 'nodemailer'
+import { SendMailDto } from './dto/message.dto'
+import Mail from 'nodemailer/lib/mailer'
 
 @Injectable()
 export class MessageService {
-  async sendMail(to: string, subject: string, html: string): Promise<void> {
+  async sendMail(dto: SendMailDto): Promise<void> {
     const transport = nodeMailer.createTransport({
       service: 'gmail',
       auth: {
@@ -12,10 +14,10 @@ export class MessageService {
       }
     })
 
-    const mailOptions = {
-      to,
-      subject,
-      html
+    const mailOptions: Mail.Options = {
+      to: dto.to,
+      subject: dto.title,
+      html: dto.content
     }
 
     await transport.sendMail(mailOptions)
