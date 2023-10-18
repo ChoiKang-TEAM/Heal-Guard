@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
 public class AdminExerciseController {
-    private AdminExerciseService exerciseService;
+    private final AdminExerciseService exerciseService;
 
     @DeleteMapping("/exercises/{exerciseId}")
     public ExerciseRespDto deleteExercise(@PathVariable long exerciseId) {
