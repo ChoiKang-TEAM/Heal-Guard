@@ -3,7 +3,6 @@ package com.choikang.healguard.exercise.controller;
 import com.choikang.healguard.exercise.dto.CreateExerciseReqDto;
 import com.choikang.healguard.exercise.dto.ExerciseListRespDto;
 import com.choikang.healguard.exercise.dto.ExerciseRespDto;
-import com.choikang.healguard.exercise.dto.UpdateExerciseReqDto;
 import com.choikang.healguard.exercise.entity.Exercise;
 import com.choikang.healguard.exercise.service.UserExerciseService;
 import lombok.RequiredArgsConstructor;

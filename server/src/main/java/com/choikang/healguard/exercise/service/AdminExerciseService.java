@@ -1,5 +1,7 @@
 package com.choikang.healguard.exercise.service;
 
+import com.choikang.healguard.exception.BusinessLogicException;
+import com.choikang.healguard.exception.ExceptionCode;
 import com.choikang.healguard.exercise.entity.Exercise;
 import com.choikang.healguard.exercise.repository.ExerciseRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AdminExerciseService {
 
-    private ExerciseRepository exerciseRepository;
+    private final ExerciseRepository exerciseRepository;
 
     public void deleteExercise(long exerciseId) {
         exerciseRepository.deleteById(exerciseId);
@@ -21,7 +23,7 @@ public class AdminExerciseService {
 
     public Exercise updateExercise(Exercise exercise) {
         Optional<Exercise> optionalExercise = exerciseRepository.findById(exercise.getId());
-        Exercise findExercise = optionalExercise.orElseThrow();
+        Exercise findExercise = optionalExercise.orElseThrow(() -> new BusinessLogicException(ExceptionCode.EXERCISE_NOT_FOUND));
 
         Optional.ofNullable(exercise.getName()).ifPresent(findExercise::setName);
         Optional.ofNullable(exercise.getCategory()).ifPresent(findExercise::setCategory);
