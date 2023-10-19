@@ -4,30 +4,12 @@ import { ConfirmVerifyCodeDto } from './dto/email-verification.dto'
 import { ApiResponse } from 'src/shared/dtos/api-response.dto'
 import { generateRandomSixDigitString } from 'src/shared/utils/random.util'
 import { getValidTime } from 'src/shared/utils/time.util'
-import { EmailVerification, User } from '@prisma/client'
+import { User } from '@prisma/client'
 import { MessageService } from 'src/member/message/message.service'
-import { SendMailDto } from 'src/member/message/dto/message.dto'
 
 @Injectable()
 export class EmailVerificationService {
   constructor(private readonly prisma: PrismaService, private readonly messageService: MessageService) {}
-
-  private async upsertEmailVerification(userId: string, randomNumber: string): Promise<EmailVerification> {
-    return this.prisma.emailVerification.upsert({
-      where: {
-        userId: userId
-      },
-      create: {
-        userId: userId,
-        verifyCode: randomNumber,
-        validTime: getValidTime(10)
-      },
-      update: {
-        verifyCode: randomNumber,
-        validTime: getValidTime(10)
-      }
-    })
-  }
 
   private async checkUserExistence(userId: string): Promise<boolean> {
     const existingUser = await this.prisma.user.findUnique({
