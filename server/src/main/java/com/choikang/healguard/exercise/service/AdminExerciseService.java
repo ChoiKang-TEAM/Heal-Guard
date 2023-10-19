@@ -18,7 +18,10 @@ public class AdminExerciseService {
     private final ExerciseRepository exerciseRepository;
 
     public void deleteExercise(long exerciseId) {
-        exerciseRepository.deleteById(exerciseId);
+        int affectedRows = exerciseRepository.deleteExerciseStatus(exerciseId);
+        if (affectedRows == 0) {
+            throw new BusinessLogicException(ExceptionCode.EXERCISE_NOT_UPDATE);
+        }
     }
 
     public Exercise updateExercise(Exercise exercise) {
@@ -33,8 +36,9 @@ public class AdminExerciseService {
     }
 
     public void updateExerciseStatus(long exerciseId) {
-        Exercise exercise = exerciseRepository.findById(exerciseId).orElseThrow();
-        exercise.setStatus(Exercise.Status.Y);
-        exerciseRepository.save(exercise); // 나중에 쿼리로 DB를 두번쓰지 않게 바꿀것
+        int affectedRows = exerciseRepository.updateExerciseStatus(exerciseId);
+        if (affectedRows == 0) {
+            throw new BusinessLogicException(ExceptionCode.EXERCISE_NOT_UPDATE);
+        }
     }
 }
