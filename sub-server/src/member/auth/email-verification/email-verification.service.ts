@@ -4,30 +4,12 @@ import { ConfirmVerifyCodeDto } from './dto/email-verification.dto'
 import { ApiResponse } from 'src/shared/dtos/api-response.dto'
 import { generateRandomSixDigitString } from 'src/shared/utils/random.util'
 import { getValidTime } from 'src/shared/utils/time.util'
-import { EmailVerification, User } from '@prisma/client'
+import { User } from '@prisma/client'
 import { MessageService } from 'src/member/message/message.service'
-import { SendMailDto } from 'src/member/message/dto/message.dto'
 
 @Injectable()
 export class EmailVerificationService {
   constructor(private readonly prisma: PrismaService, private readonly messageService: MessageService) {}
-
-  private async upsertEmailVerification(userId: string, randomNumber: string): Promise<EmailVerification> {
-    return this.prisma.emailVerification.upsert({
-      where: {
-        userId: userId
-      },
-      create: {
-        userId: userId,
-        verifyCode: randomNumber,
-        validTime: getValidTime(10)
-      },
-      update: {
-        verifyCode: randomNumber,
-        validTime: getValidTime(10)
-      }
-    })
-  }
 
   private async checkUserExistence(userId: string): Promise<boolean> {
     const existingUser = await this.prisma.user.findUnique({
@@ -46,16 +28,31 @@ export class EmailVerificationService {
       throw new BadRequestException({
         code: 3000
       })
-
-    const emailVerification = await this.upsertEmailVerification(userId, randomNumber)
-
     try {
-      const dto: SendMailDto = {
-        to: userId,
-        title: '',
-        content: ''
-      }
-      this.messageService.sendMail(dto)
+      const emailVerificationPromise = this.prisma.emailVerification.upsert({
+        where: {
+          userId: userId
+        },
+        create: {
+          userId: userId,
+          verifyCode: randomNumber,
+          validTime: getValidTime(10)
+        },
+        update: {
+          verifyCode: randomNumber,
+          validTime: getValidTime(10)
+        }
+      })
+      const emailMessagePromise = this.prisma.message.create({
+        data: {
+          msgType: 'EMAIL',
+          content: randomNumber,
+          status: 'W',
+          receiver: userId
+        }
+      })
+      await this.prisma.$transaction([emailVerificationPromise, emailMessagePromise])
+
       return {
         code: 1000,
         result: {
@@ -63,12 +60,9 @@ export class EmailVerificationService {
         }
       }
     } catch (e) {
-      await this.prisma.emailVerification.delete({
-        where: {
-          id: emailVerification.id
-        }
+      throw new InternalServerErrorException({
+        code: 2001 // TODO Error Code
       })
-      throw new InternalServerErrorException('이메일 전송에 실패했습니다.')
     }
   }
 
