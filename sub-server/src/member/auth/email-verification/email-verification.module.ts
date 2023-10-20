@@ -6,6 +6,7 @@ import { MessageService } from 'src/member/message/message.service'
 
 @Module({
   providers: [EmailVerificationService, PrismaService, MessageService],
-  controllers: [EmailVerificationController]
+  controllers: [EmailVerificationController],
+  exports: [EmailVerificationService]
 })
 export class EmailVerificationModule {}
