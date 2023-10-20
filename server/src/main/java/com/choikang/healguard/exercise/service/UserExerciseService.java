@@ -21,7 +21,7 @@ public class UserExerciseService {
     }
 
     public Page<Exercise> findExercises(int page,int size) {
-        return exerciseRepository.findAll(PageRequest.of(page - 1, size, Sort.by(Sort.Direction.DESC, "id")));
+        return exerciseRepository.findAllByStatus(Exercise.Status.Y,PageRequest.of(page - 1, size, Sort.by(Sort.Direction.DESC, "id")));
     }
 
     public Exercise findExercise(long exerciseId) {
