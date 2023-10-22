@@ -61,7 +61,7 @@ export class EmailVerificationService {
       }
     } catch (e) {
       throw new InternalServerErrorException({
-        code: 2001 // TODO Error Code
+        code: 2001
       })
     }
   }
