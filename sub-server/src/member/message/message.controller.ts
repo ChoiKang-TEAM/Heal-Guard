@@ -8,7 +8,7 @@ export class MessageController {
   constructor(private readonly emailVerificationService: EmailVerificationService) {}
   @Post('/send')
   @HttpCode(200)
-  async sendMail(@Body() sendMailDto: SendMailDto) {
-    //return this.emailVerificationService.sendMail(sendMailDto)
+  async createVerifyCodeEmail(@Body() sendMailDto: SendMailDto) {
+    return this.emailVerificationService.createVerifyCodeEmail(sendMailDto)
   }
 }

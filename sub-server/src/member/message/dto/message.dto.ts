@@ -3,11 +3,6 @@ import { IsIn, IsString } from 'class-validator'
 type MailType = 'verification'
 
 export class SendMailDto {
-  @IsIn(['verification'])
-  mailType: MailType
-}
-
-export class MailState {
   @IsString()
   to: string
 
@@ -16,4 +11,7 @@ export class MailState {
 
   @IsString()
   content: string
+
+  @IsIn(['verification'])
+  mailType: MailType
 }

@@ -1,7 +1,7 @@
 import { Body, Controller, HttpCode, Post, Response, UnauthorizedException } from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { LoginMemberUserDto } from '../user/dto/user.input'
-import { InvalidUserException } from 'src/shared/exceptions/invalid-user.exception'
+import { InvalidUserException } from 'src/shared/exceptions/user.exception'
 import { UserService } from '../user/user.service'
 import { Response as ExpressResponse } from 'express'
 
