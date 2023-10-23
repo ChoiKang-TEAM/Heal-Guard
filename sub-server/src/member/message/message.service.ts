@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common'
-import { MailState } from './dto/message.dto'
 import * as nodeMailer from 'nodemailer'
 import Mail from 'nodemailer/lib/mailer'
+import { SendMailDto } from './dto/message.dto'
 
 @Injectable()
 export class MessageService {
-  async sendMail(dto: MailState): Promise<void> {
+  async sendMail(dto: SendMailDto): Promise<void> {
     const transport = nodeMailer.createTransport({
       service: 'gmail',
       auth: {

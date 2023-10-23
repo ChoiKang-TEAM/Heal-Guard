@@ -1,33 +1,36 @@
-import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/shared/prisma/prisma.service'
 import { ConfirmVerifyCodeDto } from './dto/email-verification.dto'
 import { ApiResponse } from 'src/shared/dtos/api-response.dto'
 import { generateRandomSixDigitString } from 'src/shared/utils/random.util'
 import { getValidTime } from 'src/shared/utils/time.util'
-import { User } from '@prisma/client'
 import { MessageService } from 'src/member/message/message.service'
+import { SendMailDto } from 'src/member/message/dto/message.dto'
+import { InUsedUserException } from 'src/shared/exceptions/user.exception'
+import { PrismaException } from 'src/shared/exceptions/prisma.exception'
 
 @Injectable()
 export class EmailVerificationService {
   constructor(private readonly prisma: PrismaService, private readonly messageService: MessageService) {}
 
   private async checkUserExistence(userId: string): Promise<boolean> {
-    const existingUser = await this.prisma.user.findUnique({
-      where: {
-        userId: userId
-      }
-    })
-    return existingUser ? true : false
+    try {
+      const existingUser = await this.prisma.user.findUnique({
+        where: {
+          userId: userId
+        }
+      })
+      return existingUser ? true : false
+    } catch (e) {
+      throw new PrismaException()
+    }
   }
 
-  async sendVerificationEmail(dto: Pick<User, 'userId'>): Promise<ApiResponse<{ validTime: Date }>> {
-    const { userId } = dto
+  async createVerifyCodeEmail(dto: SendMailDto): Promise<ApiResponse<{ validTime: Date }>> {
+    const { to: userId } = dto
     const randomNumber = generateRandomSixDigitString()
     const inUsedUserId = await this.checkUserExistence(userId)
-    if (inUsedUserId)
-      throw new BadRequestException({
-        code: 3000
-      })
+    if (inUsedUserId) throw new InUsedUserException()
     try {
       const emailVerificationPromise = this.prisma.emailVerification.upsert({
         where: {
@@ -60,9 +63,7 @@ export class EmailVerificationService {
         }
       }
     } catch (e) {
-      throw new InternalServerErrorException({
-        code: 2001
-      })
+      throw new PrismaException()
     }
   }
 
