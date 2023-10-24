@@ -6,6 +6,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateUserRespDto {
+public class UserRespDto {
     private int code = ResultCode.SUCCESS.value();
 }
