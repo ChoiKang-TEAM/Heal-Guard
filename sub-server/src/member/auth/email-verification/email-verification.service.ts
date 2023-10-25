@@ -6,7 +6,7 @@ import { generateRandomSixDigitString } from 'src/shared/utils/random.util'
 import { getValidTime } from 'src/shared/utils/time.util'
 import { MessageService } from 'src/member/message/message.service'
 import { SendMailDto } from 'src/member/message/dto/message.dto'
-import { InUsedUserException } from 'src/shared/exceptions/user.exception'
+import { AuthMismatchException, InUsedUserException } from 'src/shared/exceptions/user.exception'
 import { PrismaException } from 'src/shared/exceptions/prisma.exception'
 
 @Injectable()
@@ -78,11 +78,7 @@ export class EmailVerificationService {
         return {
           code: 1000
         }
-      } else {
-        return {
-          code: 3001
-        }
-      }
+      } else throw new AuthMismatchException()
     } catch (e) {
       console.error(e)
     }
