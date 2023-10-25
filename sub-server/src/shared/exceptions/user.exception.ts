@@ -12,3 +12,9 @@ export class InUsedUserException extends BaseException {
     super(2001, 'IN_USED', HttpStatus.BAD_REQUEST)
   }
 }
+
+export class AuthMismatchException extends BaseException {
+  constructor() {
+    super(3001, 'INVALID_CREDENTIALS', HttpStatus.UNPROCESSABLE_ENTITY)
+  }
+}
