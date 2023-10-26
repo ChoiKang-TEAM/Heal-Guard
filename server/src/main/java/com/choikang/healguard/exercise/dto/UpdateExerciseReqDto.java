@@ -8,6 +8,7 @@ import lombok.Setter;
 public class UpdateExerciseReqDto {
     private Long id;
     private String name;
+    private String muscleGroup;
     private String category;
     private String description;
 }

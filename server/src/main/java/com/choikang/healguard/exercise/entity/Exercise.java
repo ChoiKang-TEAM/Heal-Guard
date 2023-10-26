@@ -18,6 +18,7 @@ public class Exercise extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String muscleGroup; // 운동 부위
     private String category;
     private String description;
     @Enumerated(EnumType.STRING)
@@ -42,12 +43,14 @@ public class Exercise extends BaseEntity {
 
     public Exercise(CreateExerciseReqDto createExerciseReqDto) {
         this.name = createExerciseReqDto.getName();
+        this.muscleGroup = createExerciseReqDto.getMuscleGroup();
         this.category = createExerciseReqDto.getCategory();
         this.description = createExerciseReqDto.getDescription();
     }
 
     public Exercise(UpdateExerciseReqDto updateExerciseReqDto) {
         this.id = updateExerciseReqDto.getId();
+        this.muscleGroup = updateExerciseReqDto.getMuscleGroup();
         this.name = updateExerciseReqDto.getName();
         this.category = updateExerciseReqDto.getCategory();
         this.description = updateExerciseReqDto.getDescription();
