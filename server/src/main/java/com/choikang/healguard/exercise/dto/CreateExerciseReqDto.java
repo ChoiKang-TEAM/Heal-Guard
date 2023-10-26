@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class CreateExerciseReqDto {
     private String name;
+    private String muscleGroup;
     private String category;
     private String description;
 }
