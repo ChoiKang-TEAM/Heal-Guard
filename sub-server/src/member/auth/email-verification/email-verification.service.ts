@@ -74,11 +74,11 @@ export class EmailVerificationService {
           userId: dto.userId
         }
       })
-      if (dto.verifyCode === verfifyCode.verifyCode) {
+      if (dto.verifyCode === verfifyCode.verifyCode)
         return {
           code: 1000
         }
-      } else throw new AuthMismatchException()
+      else throw new AuthMismatchException()
     } catch (e) {
       console.error(e)
     }
