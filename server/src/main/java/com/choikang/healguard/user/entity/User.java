@@ -2,15 +2,18 @@ package com.choikang.healguard.user.entity;
 
 import com.choikang.healguard.common.domain.BaseEntity;
 import com.choikang.healguard.user.dto.CreateUserReqDto;
+import com.choikang.healguard.user.dto.UpdateUserReqDto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
     @Id
@@ -44,5 +47,13 @@ public class User extends BaseEntity {
         this.age = createUserReqDto.getAge();
         this.nickname = createUserReqDto.getNickname();
         this.bmi = createUserReqDto.getWeight() / Math.pow(createUserReqDto.getHeight() / 100 , 2);
+    }
+
+    public User(UpdateUserReqDto updateUserReqDto) {
+        this.name = updateUserReqDto.getName();
+        this.gender = updateUserReqDto.getGender();
+        this.age = updateUserReqDto.getAge();
+        this.nickname = updateUserReqDto.getNickname();
+        this.bmi = updateUserReqDto.getWeight() / Math.pow(updateUserReqDto.getHeight() / 100 , 2);
     }
 }
