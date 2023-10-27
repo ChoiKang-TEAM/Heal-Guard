@@ -1,6 +1,7 @@
 package com.choikang.healguard.user.controller;
 
 import com.choikang.healguard.user.dto.CreateUserReqDto;
+import com.choikang.healguard.user.dto.UpdateUserReqDto;
 import com.choikang.healguard.user.dto.UserRespDto;
 import com.choikang.healguard.user.entity.User;
 import com.choikang.healguard.user.service.UserService;
@@ -16,6 +17,12 @@ public class UserController {
     @PostMapping("/users/create")
     public UserRespDto createUser(@RequestBody CreateUserReqDto request) {
         userService.createUser(new User(request));
+        return new UserRespDto();
+    }
+
+    @PatchMapping("/users/update")
+    public UserRespDto patchUser(@RequestBody UpdateUserReqDto request) {
+        userService.updateUser(new User(request));
         return new UserRespDto();
     }
 }
