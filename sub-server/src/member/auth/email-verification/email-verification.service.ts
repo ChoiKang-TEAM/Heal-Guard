@@ -8,6 +8,7 @@ import { MessageService } from 'src/member/message/message.service'
 import { SendMailDto } from 'src/member/message/dto/message.dto'
 import { AuthMismatchException, InUsedUserException } from 'src/shared/exceptions/user.exception'
 import { PrismaException } from 'src/shared/exceptions/prisma.exception'
+import { RESPONSE_CODES } from 'src/shared/utils/response.util'
 
 @Injectable()
 export class EmailVerificationService {
@@ -56,12 +57,9 @@ export class EmailVerificationService {
       })
       await this.prisma.$transaction([emailVerificationPromise, emailMessagePromise])
 
-      return {
-        code: 1000,
-        result: {
-          validTime: getValidTime(10)
-        }
-      }
+      return new ApiResponse(RESPONSE_CODES.SUCCESS, {
+        validTime: getValidTime(10)
+      })
     } catch (e) {
       throw new PrismaException()
     }
@@ -74,10 +72,7 @@ export class EmailVerificationService {
           userId: dto.userId
         }
       })
-      if (dto.verifyCode === verfifyCode.verifyCode)
-        return {
-          code: 1000
-        }
+      if (dto.verifyCode === verfifyCode.verifyCode) return new ApiResponse(RESPONSE_CODES.SUCCESS)
       else throw new AuthMismatchException()
     } catch (e) {
       console.error(e)
