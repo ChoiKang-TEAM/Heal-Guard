@@ -14,7 +14,7 @@ import { EmailVerificationModule } from './email-verification/email-verification
   imports: [
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '60m' }
+      signOptions: { expiresIn: '15m' }
     }),
     UserModule,
     EmailVerificationModule
