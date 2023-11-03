@@ -42,12 +42,10 @@ export class UserService implements CrudService<User> {
           }
         }
       })
-      // 타 db에 데이터 저장
 
       return true
     } catch (e) {
       if (e.response.data.code === 2000) {
-        // 롤백
       }
       return false
     }
