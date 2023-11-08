@@ -1,5 +1,6 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException, BadRequestException } from '@nestjs/common'
 import { Response } from 'express'
+import { ERROR_CODES } from '../utils/response.util'
 
 @Catch(BadRequestException)
 export class BadRequestExceptionFilter implements ExceptionFilter {
@@ -14,7 +15,7 @@ export class BadRequestExceptionFilter implements ExceptionFilter {
     }
 
     response.status(status).json({
-      code: 2000,
+      code: ERROR_CODES.BAD_REQUEST,
       result: {
         error: message
       }
